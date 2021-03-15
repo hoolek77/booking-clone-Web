@@ -9,9 +9,7 @@ const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 const config = (env, args) => {
   const config = {
-    entry: { 
-      index: path.resolve(__dirname, "src", "index.js") 
-    },
+    entry: ["babel-polyfill", path.resolve(__dirname, "src", "index.js")],
     output: {
       path: path.resolve(__dirname, './dist'),
     },
@@ -73,6 +71,10 @@ const config = (env, args) => {
       clientLogLevel: "silent",
       historyApiFallback: true,
       port: 5052,
+      compress: true,
+      hot: true,
+      open: true,
+      watchContentBase: true
     },
   };
 

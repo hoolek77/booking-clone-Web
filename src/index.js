@@ -8,6 +8,9 @@ import generalRoutes from './routes/general';
 import adminRoutes from './routes/admin'
 import hotelOwnerRoutes from './routes/hotelOwner';
 import userRoutes from './routes/user';
+import { TopSection } from './components';
+import { loadUserInfo, getCookieValue } from './utils';
+import { COOKIE_TOKEN } from './constants';
 
 /* *********************** INFO *********************** */
 /*
@@ -25,6 +28,7 @@ import userRoutes from './routes/user';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <TopSection />
 
       {/* GENERAL ROUTES */}
       { generalRoutes }
@@ -33,10 +37,10 @@ ReactDOM.render(
       { adminRoutes }
 
       {/* USER ROUTES */}
-      {/* { userRoutes } */}
+      { userRoutes }
 
       {/* HOTEL OWNER ROUTES */}
-      {/* { hotelOwnerRoutes } */}
+      { hotelOwnerRoutes }
 
     </BrowserRouter>
   </React.StrictMode>,

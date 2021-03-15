@@ -1,8 +1,9 @@
 import React from "react";
+import { MainPageView } from "./components";
 
 function App() {
   return (
-    <div className="App">Good Luck!</div>
+    <MainPageView />
   )
 }
 

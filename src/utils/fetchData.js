@@ -1,26 +1,32 @@
-export const fetchData = async (url, method, body = null, token = null) => {
-    try {
-        const options = {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }
+import axios from 'axios'
+import { COOKIE_TOKEN } from "../constants";
+import { getCookieValue } from "./cookies";
 
-        if(token) {
-            options['Authorization'] = 'Bearer ' + token
-            options['x-auth-token'] = token
-        }
+export const fetchData = async (url, method, data = null) => {
+  const config = {
+    method: method,
+    url: url,
+    responseType: 'json',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "same-origin",
+  };
 
-        if(body) {
-            options['body'] = 'Bearer ' + body
-        }
+  if(data) {
+    config['data'] = data
+  }
 
-        const response = await fetch(url, options)
+  const token = getCookieValue(COOKIE_TOKEN)
+  if(token) {
+    config.headers['x-auth-token'] = token;
+    config.headers['Authorization'] = "Bearer " + token
+  }
 
-        const data = await response.json()
-        return data
-    } catch (error) {
-        throw new Error(error)
-    }
-}
+  try {
+    const res = await axios(config);
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
