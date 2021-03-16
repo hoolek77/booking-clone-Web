@@ -1,10 +1,8 @@
-import React from "react";
-import { MainPageView } from "./components";
+import React from 'react'
+import { MainPageView } from './components'
 
 function App() {
-  return (
-    <MainPageView />
-  )
+  return <MainPageView />
 }
 
-export default App;
+export default App

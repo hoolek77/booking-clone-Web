@@ -3,8 +3,7 @@ import { Route } from 'react-router-dom'
 import App from '../App'
 
 const generalRoutes = [
-    <Route exact path="/" component={() => <App />} key="app-route" />
+  <Route exact path="/" component={() => <App />} key="app-route" />,
 ]
 
-
-export default generalRoutes;
+export default generalRoutes

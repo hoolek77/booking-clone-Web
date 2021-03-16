@@ -1,70 +1,89 @@
-import React from "react";
-import { TextField, Input, CircularProgress } from "@material-ui/core";
-import { fetchData, saveCookie, loadUserInfo } from '../utils';
-import { COOKIE_TOKEN } from "../constants";
+import React from 'react'
+import { TextField, Input, CircularProgress } from '@material-ui/core'
+import { fetchData, saveCookie, loadUserInfo } from '../utils'
+import { COOKIE_TOKEN } from '../constants'
 
 export class Login extends React.Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        this.state = {
-            form: {
-                email: '',
-                password: '',
-            },
-            logging: false
-        }
-
-        this.login.bind(this)
-        this.handleEmailChange.bind(this);
-        this.handlePasswordChange.bind(this);
+    this.state = {
+      form: {
+        email: '',
+        password: '',
+      },
+      logging: false,
     }
 
-    async login(e) {
-        e.preventDefault();
-        this.setState( { logging: true })
+    this.login.bind(this)
+    this.handleEmailChange.bind(this)
+    this.handlePasswordChange.bind(this)
+  }
 
-        try {
-            const { token } = await fetchData(API_BASE_URL + 'api/auth/login', 'POST', this.state.form)
+  async login(e) {
+    e.preventDefault()
+    this.setState({ logging: true })
 
-            const cookieOpt = {
-                cname: COOKIE_TOKEN,
-                cvalue: token,
-                expiredHours: 1
-            }
-            saveCookie(cookieOpt)
+    try {
+      const { token } = await fetchData(
+        API_BASE_URL + 'api/auth/login',
+        'POST',
+        this.state.form
+      )
 
-            await loadUserInfo()
+      const cookieOpt = {
+        cname: COOKIE_TOKEN,
+        cvalue: token,
+        expiredHours: 1,
+      }
+      saveCookie(cookieOpt)
 
-            this.setState({ logging: false })
-            window.location.href = '/'
-        } catch(err) {
-            alert(err.message)
+      await loadUserInfo()
 
-            this.setState({ logging: false })
-        }
+      this.setState({ logging: false })
+      window.location.href = '/'
+    } catch (err) {
+      alert(err.message)
+
+      this.setState({ logging: false })
     }
+  }
 
-    handleEmailChange(e) {
-        this.setState({ form: { ...this.state.form, email: e.target.value } })
-    }
+  handleEmailChange(e) {
+    this.setState({ form: { ...this.state.form, email: e.target.value } })
+  }
 
-    handlePasswordChange(e) {
-        this.setState({ form: { ...this.state.form, password: e.target.value } })
-    }
+  handlePasswordChange(e) {
+    this.setState({ form: { ...this.state.form, password: e.target.value } })
+  }
 
-    render() {
-        return (
-            <form id="Login" onSubmit={(e) => this.login(e)} autoComplete="on">
-                <TextField id="outlined-basic" label="Login" type="email" variant="outlined" onChange={(e) => this.handleEmailChange(e)} noValidate required/>
-                <TextField id="outlined-basic" label="Password" type="password" variant="outlined" onChange={(e) => this.handlePasswordChange(e)} noValidate required/>
-                {
-                    !this.state.logging ? 
-                    <Input type="submit" value="Login" />
-                    :
-                    <CircularProgress />
-                }
-            </form>
-        )
-    }
+  render() {
+    return (
+      <form id="Login" onSubmit={(e) => this.login(e)} autoComplete="on">
+        <TextField
+          id="outlined-basic"
+          label="Login"
+          type="email"
+          variant="outlined"
+          onChange={(e) => this.handleEmailChange(e)}
+          noValidate
+          required
+        />
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          type="password"
+          variant="outlined"
+          onChange={(e) => this.handlePasswordChange(e)}
+          noValidate
+          required
+        />
+        {!this.state.logging ? (
+          <Input type="submit" value="Login" />
+        ) : (
+          <CircularProgress />
+        )}
+      </form>
+    )
+  }
 }
