@@ -26,7 +26,7 @@ export class Login extends React.Component {
 
     try {
       const { token } = await fetchData(
-        API_BASE_URL + 'api/auth/login',
+        global.API_BASE_URL + 'api/auth/login',
         'POST',
         this.state.form
       )
