@@ -2,6 +2,7 @@ import React from 'react'
 import { TextField, CircularProgress } from '@material-ui/core'
 import { fetchData, saveCookie } from '../utils'
 import { COOKIE_TOKEN, HOTEL_OWNER_ROLE, USER_ROLE } from '../constants'
+import { loadUserInfo } from '../utils'
 import {
   MenuItem,
   FormControl,
@@ -61,9 +62,10 @@ export class Register extends React.Component {
       }
 
       saveCookie(cookieOpt)
-      window.location.href = '/'
+      await loadUserInfo()
 
       this.setState({ registering: false })
+      window.location.href = '/'
     } catch (err) {
       alert(err.message)
 
