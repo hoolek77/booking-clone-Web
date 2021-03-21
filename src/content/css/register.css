@@ -34,6 +34,9 @@
 .grid-form-box {
   min-height: 250px;
 }
+.width100 {
+  width: 100%;
+}
 @media screen and (max-width: 600px) {
   .align-center-mobile {
     align-items: center !important;
