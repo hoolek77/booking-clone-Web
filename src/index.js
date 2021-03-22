@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import './core/bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import reportWebVitals from './reportWebVitals'
 import generalRoutes from './routes/general'
