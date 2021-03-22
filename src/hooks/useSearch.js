@@ -4,7 +4,10 @@ import axios from 'axios'
 export const useSearch = () => {
   const [hotels, setHotels] = useState([])
 
-  const search = async ({ city, startDate, endDate, adults, children }) => {
+  const search = async (
+    { city, startDate, endDate, adults, children },
+    setLoading
+  ) => {
     let data = {}
     if (!startDate || !endDate) {
       data = {
@@ -21,11 +24,13 @@ export const useSearch = () => {
     }
 
     try {
+      setLoading(true)
       const response = await axios.get(global.API_BASE_URL + 'api/hotels', {
         params: data,
       })
 
       setHotels(response.data)
+      setLoading(false)
     } catch (ex) {
       alert(ex.message)
     }
