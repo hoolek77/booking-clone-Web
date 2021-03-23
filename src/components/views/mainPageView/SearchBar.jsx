@@ -6,9 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 import '../../../content/css/searchBar.css'
 import Box from '@material-ui/core/Box'
-import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -27,7 +27,6 @@ const SearchBar = ({ onSearchSubmit }) => {
   const [endDate, setEndDate] = useState('')
   const [adults, setAdults] = useState(1)
   const [children, setChildren] = useState(0)
-  const [loading, setLoading] = useState(false)
 
   const data = {
     city: city === 'Anywhere' ? '' : city,
@@ -35,10 +34,6 @@ const SearchBar = ({ onSearchSubmit }) => {
     endDate,
     adults,
     children,
-  }
-
-  const handleSearchSubmit = () => {
-    onSearchSubmit(data, setLoading)
   }
 
   return (
@@ -112,23 +107,24 @@ const SearchBar = ({ onSearchSubmit }) => {
           onChange={(e) => setChildren(e.target.value)}
         />
         <div className={`${classes.field} search-bar-field-container`}>
-          {loading ? (
-            <CircularProgress
-              color="secondary"
-              style={{ marginLeft: '.5rem' }}
-            />
-          ) : (
+          <Link
+            to={{
+              pathname: `hotels/${city}`,
+              state: data,
+            }}
+            style={{ marginLeft: '.5rem' }}
+            className={classes.textField}
+          >
             <Button
               variant="contained"
               color="secondary"
               type="submit"
               style={{ marginLeft: '.5rem' }}
-              onClick={handleSearchSubmit}
               className={`${classes.field} search-bar-field`}
             >
               Search
             </Button>
-          )}
+          </Link>
         </div>
       </Box>
     </div>

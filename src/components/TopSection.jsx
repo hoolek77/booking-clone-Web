@@ -9,7 +9,6 @@ import '../content/css/topSection.css'
 
 export const TopSection = () => {
   const [userInfo, setUserInfo] = useState({})
-  console.log(userInfo)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useMemo(() => {
@@ -30,10 +29,7 @@ export const TopSection = () => {
   }
 
   return (
-    <div
-      id="TopSection"
-      style={{ padding: '5px 0 5px 0', marginBottom: '20px' }}
-    >
+    <div id="TopSection" style={{ padding: '5px 0 5px 0' }}>
       <Container fixed>
         <Grid
           container
