@@ -47,9 +47,6 @@ ReactDOM.render(
       <BrowserRouter>
         <TopSection />
         <Switch>
-          {/* GENERAL ROUTES */}
-          {generalRoutes}
-
           {/* ADMIN ROUTES */}
           {adminRoutes}
 
@@ -58,6 +55,9 @@ ReactDOM.render(
 
           {/* HOTEL OWNER ROUTES */}
           {hotelOwnerRoutes}
+
+          {/* GENERAL ROUTES */}
+          {generalRoutes}
         </Switch>
         <Footer />
       </BrowserRouter>
