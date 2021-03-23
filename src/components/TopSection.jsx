@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { COOKIE_TOKEN } from '../constants'
-import { getCookieValue, getUserInfo } from '../utils'
+import { getCookieValue, getUserInfo, removeCookie } from '../utils'
 import { Login } from './Login'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
@@ -25,6 +25,8 @@ export const TopSection = () => {
 
   const logout = () => {
     localStorage.clear('userInfo')
+    removeCookie(COOKIE_TOKEN)
+    window.location.href = '/'
   }
 
   return (
