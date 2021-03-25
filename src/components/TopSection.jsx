@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react'
 import { COOKIE_TOKEN } from '../constants'
-import { getCookieValue, getUserInfo, removeCookie } from '../utils'
+import { getUserInfo, removeCookie } from '../utils'
 import { Login } from './Login'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import { isUserLoggedIn } from '../utils'
 import '../content/css/topSection.css'
 
 export const TopSection = () => {
@@ -12,13 +13,11 @@ export const TopSection = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useMemo(() => {
-    const token = getCookieValue(COOKIE_TOKEN)
-    if (token) {
+    const isLogged = isUserLoggedIn()
+    if (isLogged) {
       const data = getUserInfo()
-      if (data) {
-        setUserInfo(data)
-        setIsLoggedIn(true)
-      }
+      setUserInfo(data)
+      setIsLoggedIn(true)
     }
   }, [])
 

@@ -1,10 +1,11 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Grid from '@material-ui/core/Grid'
 
 export default function LoadingIcon(props) {
   return (
-    <div className="d-flex justify-content-center">
+    <Grid container direction="column" justify="center" alignItems="center">
       <CircularProgress />
-      <span className="sr-only">Loading...</span>
-    </div>
+      <p className="sr-only">Loading...</p>
+    </Grid>
   )
 }
