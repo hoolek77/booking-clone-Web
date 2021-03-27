@@ -64,7 +64,11 @@ const Menu = ({ menuItems, cssClasses }) => {
             )
           } else {
             return (
-              <Link className={`nav-link ${classes.navLink}`} to={location}>
+              <Link
+                className={`nav-link ${classes.navLink}`}
+                to={location}
+                key={menuItem.name}
+              >
                 {name}
               </Link>
             )

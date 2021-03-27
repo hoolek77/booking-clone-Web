@@ -38,15 +38,19 @@ export const TopSection = () => {
       {isLoggedIn ? (
         <div className="loginUserInfo">
           Willkommen {userInfo.firstName} {userInfo.lastName} !
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            style={{ marginRight: '5%' }}
-          >
-            {userInfo.role === HOTEL_OWNER_ROLE ? 'Hotel Owner' : userInfo.role}{' '}
-            panel
-          </Button>
+          <Link to={`/${userInfo.role}`} style={{ textDecoration: 'none' }}>
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              style={{ marginRight: '5%' }}
+            >
+              {userInfo.role === HOTEL_OWNER_ROLE
+                ? 'Hotel Owner'
+                : userInfo.role}{' '}
+              panel
+            </Button>
+          </Link>
           <Button
             size="small"
             variant="contained"
@@ -73,11 +77,7 @@ export const TopSection = () => {
           </Grid>
           <Grid item className="loginRegister">
             <Link to={`/register`} className="loginLink">
-              <Button
-                size="small"
-                variant="contained"
-                color="secondary"
-              >
+              <Button size="small" variant="contained" color="secondary">
                 REGISTER
               </Button>
             </Link>

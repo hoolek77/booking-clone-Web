@@ -32,13 +32,15 @@ export function RoomCard(room, isLogged) {
     },
     price: 500,
   }
+
   const classes = useStyles()
+
   const handleReserve = (loggedIn) => {
-    console.log(loggedIn)
     if (!loggedIn) return alert('Please login first')
     if (isHotelOwner() || isAdmin())
       return alert('You are not allowed to make reservation')
   }
+
   return (
     <Grid container direction="column" justify="center" alignItems="center">
       <Grid container direction="row" justify="center" alignItems="flex-start">

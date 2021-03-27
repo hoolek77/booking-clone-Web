@@ -8,7 +8,6 @@ export const loadUserInfo = async () => {
 
 export const getUserInfo = () => {
   const lsData = localStorage.getItem(LS_USER)
-  console.log(lsData)
   if (!lsData) return false
 
   const data = JSON.parse(lsData)

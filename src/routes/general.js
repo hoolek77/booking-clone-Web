@@ -18,7 +18,7 @@ const generalRoutes = [
     render={(props) => <Hotels {...props} />}
     key="app-hotelsByCity"
   />,
-  <Route path="*">
+  <Route path="*" key="NoMatch">
     <NoMatch />
   </Route>,
 ]

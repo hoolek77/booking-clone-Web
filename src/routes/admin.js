@@ -9,6 +9,24 @@ const adminRoutes = [
     exact
     key="admin-route"
   />,
+  <Route
+    path="/admin/users"
+    key="admin-route-users"
+    render={(props) => <AdminView {...props} />}
+    exact
+  />,
+  <Route
+    path="/admin/hotelowners"
+    key="admin-route-hotelowners"
+    render={(props) => <AdminView {...props} />}
+    exact
+  />,
+  <Route
+    path="/admin/reservations"
+    key="admin-route-reservations"
+    render={(props) => <AdminView {...props} />}
+    exact
+  />,
 ]
 
 export default adminRoutes

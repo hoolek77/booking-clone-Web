@@ -1,0 +1,2 @@
+export const LOADING =
+  '<div class="MuiCircularProgress-root makeStyles-center-11 MuiCircularProgress-colorSecondary MuiCircularProgress-indeterminate" role="progressbar" style="width: 30px; height: 30px;"><svg class="MuiCircularProgress-svg" viewBox="22 22 44 44"><circle class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate" cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6"></circle></svg></div>'

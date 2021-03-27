@@ -28,7 +28,7 @@ export const isHotelOwnerVerified = () => {
 
 export const isAdmin = () => {
   const role = getRoleFromLS()
-  return role == ADMIN_ROLE
+  return role === ADMIN_ROLE
 }
 
 export const isUserLoggedIn = () => {
