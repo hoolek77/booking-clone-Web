@@ -1,8 +1,8 @@
 import React from 'react'
 import { TextField, Input, CircularProgress } from '@material-ui/core'
+
 import { fetchData, saveCookie, loadUserInfo } from '../utils'
 import { COOKIE_TOKEN } from '../constants'
-import '../content/css/login.css'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -37,8 +37,8 @@ export class Login extends React.Component {
         cvalue: token,
         expiredHours: 1,
       }
-      saveCookie(cookieOpt)
 
+      saveCookie(cookieOpt)
       await loadUserInfo()
 
       this.setState({ logging: false })
@@ -63,6 +63,7 @@ export class Login extends React.Component {
       <form id="Login" onSubmit={(e) => this.login(e)} autoComplete="on">
         <TextField
           id="outlined-basic"
+          className="loginTextField"
           label="Login"
           type="email"
           size="small"
@@ -90,13 +91,12 @@ export class Login extends React.Component {
             <Input
               type="submit"
               value="Login"
-              margin="dense"
               className="loginInput"
               color="secondary"
             />
           </>
         ) : (
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         )}
       </form>
     )

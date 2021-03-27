@@ -1,5 +1,4 @@
 import React from 'react'
-import '../content/css/noMatch.css'
 
 export const NoMatch = () => {
   return (

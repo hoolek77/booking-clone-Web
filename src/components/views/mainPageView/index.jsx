@@ -1,11 +1,13 @@
 import React from 'react'
+
+import { Grid, makeStyles } from '@material-ui/core'
+
 import SearchBar from './SearchBar'
 import { CityCard } from './CityCard'
-import '../../../content/css/main.css'
+
 import wroclaw from '../../../static/mainPageImgs/wroclaw.jpg'
 import bydgoszcz from '../../../static/mainPageImgs/bydgosz.jpg'
 import krakow from '../../../static/mainPageImgs/krakow.jpg'
-import { Grid, makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   center: {

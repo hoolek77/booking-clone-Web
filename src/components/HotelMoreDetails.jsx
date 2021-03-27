@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react'
-import { useEffect, useState } from 'react'
-import { fetchData } from '../utils'
+import React, { useEffect, useState } from 'react'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
+
+import { fetchData } from '../utils'
 import LoadingIcon from './shared/LoadingIcon'
 import { RoomCard } from './RoomCard'
 
@@ -26,13 +27,12 @@ const useStyles = makeStyles((theme) => ({
 export function HotelMoreDetails({ hotelId, city }) {
   const classes = useStyles()
   const [hotel, setHotel] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   hotelId = '604ba08e6cea81001597f032'
   city = 'Bydgoszcz'
 
   const getHotel = async () => {
-    setLoading(true)
     try {
       const hotel = await fetchData(
         global.API_BASE_URL + `api/hotels/${hotelId}`,
@@ -46,9 +46,10 @@ export function HotelMoreDetails({ hotelId, city }) {
     }
   }
 
-  useMemo(() => {
+  useEffect(() => {
     getHotel()
   }, [])
+
   return loading ? (
     <Grid container direction="row" justify="center" alignItems="center">
       <LoadingIcon />

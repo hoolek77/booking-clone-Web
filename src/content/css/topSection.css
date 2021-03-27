@@ -1,12 +1,28 @@
 #TopSection {
   background-color: #31a3be;
   height: 15vh;
+  padding: 0 15px 15px 15px;
+}
+.topSectionHeader {
+  text-align: center;
 }
 
-.loginHeader {
+.topSectionContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.topSectionHeaderlink {
   font-size: 32px;
   font-weight: bold;
   color: #fafafa;
+  margin-left: 10%;
+}
+.topSectionHeaderlink:hover {
+  color: #fafafa;
+  text-decoration: none;
 }
 
 .loginHeaderSpan {
@@ -14,6 +30,51 @@
 }
 
 .loginForgotPassword {
-  color: inherit; /* blue colors for links too */
-  text-decoration: inherit; /* no underline */
+  margin-right: 15px;
+}
+
+.loginLink {
+  color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.loginLink:hover {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.PrivateNotchedOutline-root-1,
+.MuiOutlinedInput-notchedOutline {
+  background-color: #fafafa;
+}
+.loginRegister {
+  margin-bottom: 22px !important;
+  padding: 0 5px 0 0;
+}
+
+.MuiGrid-spacing-xs-3 > .MuiGrid-item {
+  padding: 0 5px 0 0 !important;
+}
+#outlined-basic {
+  z-index: 1;
+}
+
+@media screen and (max-width: 1250px) {
+  .topSectionContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .topSectionHeaderlink {
+    position: relative;
+    top: 28px;
+    left: 10px;
+    margin: 0;
+  }
+
+  .loginContainer {
+    position: relative;
+    top: -12px;
+  }
 }

@@ -1,9 +1,7 @@
 import React from 'react'
-import { TextField, CircularProgress } from '@material-ui/core'
-import { fetchData, saveCookie } from '../utils'
-import { COOKIE_TOKEN, HOTEL_OWNER_ROLE, USER_ROLE } from '../constants'
-import { loadUserInfo } from '../utils'
 import {
+  TextField, 
+  CircularProgress,
   MenuItem,
   FormControl,
   InputLabel,
@@ -13,7 +11,9 @@ import {
   Grid,
   Button,
 } from '@material-ui/core'
-import '../content/css/register.css'
+
+import { fetchData, saveCookie, loadUserInfo } from '../utils'
+import { COOKIE_TOKEN, HOTEL_OWNER_ROLE, USER_ROLE } from '../constants'
 
 export class Register extends React.Component {
   constructor(props) {

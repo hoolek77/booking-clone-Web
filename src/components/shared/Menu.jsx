@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Dropdown } from './Dropdown'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+
+import { Dropdown } from './Dropdown'
 
 // EXAMPLE USAGE:
 

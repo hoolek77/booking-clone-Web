@@ -108,6 +108,7 @@ const EnhancedTableHead = (props) => {
     onRequestSort,
     headCells,
   } = props
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property)
   }

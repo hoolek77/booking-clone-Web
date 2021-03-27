@@ -1,10 +1,12 @@
 import React from 'react'
+
 import { makeStyles } from '@material-ui/core/styles'
 import SingleBedIcon from '@material-ui/icons/SingleBed'
 import KingBedIcon from '@material-ui/icons/KingBed'
 import EuroIcon from '@material-ui/icons/Euro'
 import { Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
+
 import { isHotelOwner, isAdmin } from '../utils'
 
 const useStyles = makeStyles((theme) => ({

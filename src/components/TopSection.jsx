@@ -1,19 +1,18 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { COOKIE_TOKEN } from '../constants'
-import { getUserInfo, removeCookie } from '../utils'
-import { Login } from './Login'
-import Container from '@material-ui/core/Container'
+
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import { isUserLoggedIn } from '../utils'
-import '../content/css/topSection.css'
+
+import { COOKIE_TOKEN, HOTEL_OWNER_ROLE } from '../constants'
+import { getUserInfo, removeCookie, isUserLoggedIn } from '../utils'
+import { Login } from './Login'
 
 export const TopSection = () => {
   const [userInfo, setUserInfo] = useState({})
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  useMemo(() => {
+  useEffect(() => {
     const isLogged = isUserLoggedIn()
     if (isLogged) {
       const data = getUserInfo()
@@ -29,84 +28,62 @@ export const TopSection = () => {
   }
 
   return (
-    <div id="TopSection" style={{ padding: '5px 0 5px 0' }}>
-      <Container fixed>
+    <div id="TopSection" className="topSectionContainer">
+      <Grid container direction="row" justify="flex-start" alignItems="center">
+        <a href="/" className="topSectionHeaderlink">
+          Booking <span className="loginHeaderSpan">Clone</span>
+        </a>
+      </Grid>
+
+      {isLoggedIn ? (
+        <div className="loginUserInfo">
+          Willkommen {userInfo.firstName} {userInfo.lastName} !
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            style={{ marginRight: '5%' }}
+          >
+            {userInfo.role === HOTEL_OWNER_ROLE ? 'Hotel Owner' : userInfo.role}{' '}
+            panel
+          </Button>
+          <Button
+            size="small"
+            variant="contained"
+            onClick={logout}
+            color="secondary"
+          >
+            logout
+          </Button>
+        </div>
+      ) : (
         <Grid
           container
-          justify="space-around"
+          direction="row"
+          justify="flex-end"
           alignItems="center"
-          style={{
-            height: '15vh',
-          }}
+          spacing={3}
+          className="loginContainer"
         >
-          <Grid item xs={3}>
-            <div className="loginHeader">
-              Booking <span className="loginHeaderSpan">Clone</span>
-            </div>
+          <Grid item>
+            <Login />
+            <a href="#" className="loginForgotPassword loginLink">
+              FORGOT PASSWORD
+            </a>
           </Grid>
-          <Grid item xs={9}>
-            <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="center"
-            >
-              {isLoggedIn ? (
-                <div className="loginUserInfo">
-                  Willkommen {userInfo.firstName} {userInfo.lastName} !
-                </div>
-              ) : (
-                <Login />
-              )}
-            </Grid>
-            <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="center"
-            >
-              {isLoggedIn ? (
-                <Grid
-                  container
-                  direction="row"
-                  justify="flex-end"
-                  alignItems="center"
-                >
-                  <Link
-                    to={{
-                      pathname: `/${userInfo.role}`,
-                      state: userInfo,
-                    }}
-                  >
-                    <Button size="small" variant="contained" color="secondary">
-                      {userInfo.role} panel
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      onClick={logout}
-                      color="secondary"
-                    >
-                      Logout
-                    </Button>
-                  </Link>
-                </Grid>
-              ) : (
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <a href="#" className="loginForgotPassword">
-                    FORGOT PASSWORD
-                  </a>
-                </Grid>
-              )}
-            </Grid>
+          <Grid item className="loginRegister">
+            <Link to={`/register`} className="loginLink">
+              <Button
+                size="small"
+                variant="contained"
+                color="secondary"
+              >
+                REGISTER
+              </Button>
+            </Link>
           </Grid>
         </Grid>
-      </Container>
+      )}
     </div>
   )
 }

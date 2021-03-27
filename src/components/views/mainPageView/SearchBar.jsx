@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -6,8 +8,6 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
-import { Link } from 'react-router-dom'
-import '../../../content/css/searchBar.css'
 import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles((theme) => ({
