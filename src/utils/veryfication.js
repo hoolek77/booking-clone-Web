@@ -18,6 +18,14 @@ export const isHotelOwner = () => {
   return role === HOTEL_OWNER_ROLE
 }
 
+export const isHotelOwnerVerified = () => {
+  if (!isHotelOwner()) return
+  const data = getUserInfo()
+  if (!data.isVerified) {
+    return false
+  } else return true
+}
+
 export const isAdmin = () => {
   const role = getRoleFromLS()
   return role == ADMIN_ROLE

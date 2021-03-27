@@ -1,11 +1,32 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import { HotelOwnerView } from '../components'
+import { isHotelOwner } from '../utils/veryfication'
+
+const PrivateRouteHotelOwner = ({ ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        return isHotelOwner() ? (
+          <HotelOwnerView {...props} />
+        ) : (
+          <Redirect to="/" />
+        )
+      }}
+    />
+  )
+}
 
 const hotelOwnerRoutes = [
-  <Route
-    path="/hotelOwner"
-    component={() => <HotelOwnerView />}
+  <PrivateRouteHotelOwner path="/hotelOwner" exact key="hotelOwner-route" />,
+  <PrivateRouteHotelOwner
+    path="/hotelOwner/addHotel"
+    exact
+    key="hotelOwner-route"
+  />,
+  <PrivateRouteHotelOwner
+    path="/hotelOwner/showAll"
     exact
     key="hotelOwner-route"
   />,
