@@ -61,3 +61,5 @@ export const MainPageView = () => {
     </div>
   )
 }
+
+export * from './Hotels'
