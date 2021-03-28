@@ -1,0 +1,19 @@
+.helpContainer {
+  transform: translate(0, 50%);
+  margin: 0 auto;
+}
+
+.helpHeader {
+  color: #ebb15f;
+  font-size: 4rem;
+  font-weight: bold;
+  border-bottom: 1px solid;
+  margin-bottom: 30px;
+}
+.helpNumber {
+  font-weight: 700;
+}
+.helpLink {
+  color: #31a3be;
+  font-weight: 700;
+}
