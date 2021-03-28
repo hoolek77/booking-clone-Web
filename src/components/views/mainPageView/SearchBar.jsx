@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import Button from '@material-ui/core/Button'
+import { Redirect } from 'react-router-dom'
 import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,11 +22,12 @@ const useStyles = makeStyles((theme) => ({
 const SearchBar = ({ onSearchSubmit }) => {
   const classes = useStyles()
 
-  const [city, setCity] = useState('')
+  const [city, setCity] = useState('Anywhere')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [adults, setAdults] = useState(1)
   const [children, setChildren] = useState(0)
+  const [redirect, setRedirect] = useState(false)
 
   const data = {
     city: city === 'Anywhere' ? '' : city,
@@ -36,85 +37,88 @@ const SearchBar = ({ onSearchSubmit }) => {
     children,
   }
 
+  const submit = (e) => {
+    e.preventDefault()
+    setRedirect(true)
+  }
+
   return (
     <div className="search-bar-container">
-      <Box className="search-bar" borderRadius={5} boxShadow={3}>
-        <FormControl
-          className={`${classes.field} search-bar-field`}
-          color="secondary"
-        >
-          <InputLabel id="demo-simple-select-label">City</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            onChange={(e) => setCity(e.target.value)}
-            value={city}
+      <form onSubmit={submit}>
+        <Box className="search-bar" borderRadius={5} boxShadow={3}>
+          <FormControl
+            className={`${classes.field} search-bar-field`}
             color="secondary"
           >
-            <MenuItem value={'Warsaw'}>Warsaw</MenuItem>
-            <MenuItem value={'Wroclaw'}>Wroclaw</MenuItem>
-            <MenuItem value={'Bydgoszcz'}>Bydgoszcz</MenuItem>
-            <MenuItem value={'Anywhere'}>Anywhere</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          id="date"
-          color="secondary"
-          label="Start Date"
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          className={`${classes.field} search-bar-field`}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-          id="date"
-          color="secondary"
-          label="End Date"
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          className={`${classes.field} search-bar-field`}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-          id="standard-number"
-          color="secondary"
-          className={`${classes.numberField} search-bar-number-field`}
-          label="Adults"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={adults}
-          onChange={(e) => setAdults(e.target.value)}
-        />
-        <TextField
-          id="standard-number"
-          color="secondary"
-          className={`${classes.numberField} search-bar-number-field`}
-          label="Children"
-          style={{ marginLeft: '.5rem' }}
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={children}
-          onChange={(e) => setChildren(e.target.value)}
-        />
-        <div className={`${classes.field} search-bar-field-container`}>
-          <Link
-            to={{
-              pathname: `hotels/${city}`,
-              state: data,
+            <InputLabel id="demo-simple-select-label">City</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              onChange={(e) => setCity(e.target.value)}
+              value={city}
+              color="secondary"
+              required
+            >
+              <MenuItem value={'Anywhere'}>Anywhere</MenuItem>
+              <MenuItem value={'Warsaw'}>Warsaw</MenuItem>
+              <MenuItem value={'Wroclaw'}>Wroclaw</MenuItem>
+              <MenuItem value={'Bydgoszcz'}>Bydgoszcz</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            id="date"
+            color="secondary"
+            label="Start Date"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className={`${classes.field} search-bar-field`}
+            InputLabelProps={{
+              shrink: true,
             }}
+            required
+          />
+          <TextField
+            id="date"
+            color="secondary"
+            label="End Date"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className={`${classes.field} search-bar-field`}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            required
+          />
+          <TextField
+            id="standard-number"
+            color="secondary"
+            className={`${classes.numberField} search-bar-number-field`}
+            label="Adults"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={adults}
+            onChange={(e) => setAdults(e.target.value)}
+            required
+          />
+          <TextField
+            id="standard-number"
+            color="secondary"
+            className={`${classes.numberField} search-bar-number-field`}
+            label="Children"
             style={{ marginLeft: '.5rem' }}
-            className={classes.textField}
-          >
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={children}
+            onChange={(e) => setChildren(e.target.value)}
+            required
+          />
+          <div className={`${classes.field} search-bar-field-container`}>
             <Button
               variant="contained"
               color="secondary"
@@ -124,9 +128,19 @@ const SearchBar = ({ onSearchSubmit }) => {
             >
               Search
             </Button>
-          </Link>
-        </div>
-      </Box>
+          </div>
+        </Box>
+      </form>
+      {redirect ? (
+        <Redirect
+          to={{
+            pathname: `hotels/${city}`,
+            state: data,
+          }}
+        />
+      ) : (
+        ''
+      )}
     </div>
   )
 }

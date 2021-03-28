@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   height100: {
-    height: '100%',
+    minHeight: '70vh',
   },
 }))
 

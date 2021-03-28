@@ -24,13 +24,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function HotelMoreDetails({ hotelId, city }) {
+export function HotelMoreDetails({ hotelId, city, location }) {
   const classes = useStyles()
   const [hotel, setHotel] = useState(null)
   const [loading, setLoading] = useState(true)
-
-  hotelId = '604ba08e6cea81001597f032'
-  city = 'Bydgoszcz'
+  const numberOfDays = location.state
 
   const getHotel = async () => {
     try {
@@ -51,7 +49,13 @@ export function HotelMoreDetails({ hotelId, city }) {
   }, [])
 
   return loading ? (
-    <Grid container direction="row" justify="center" alignItems="center">
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      style={{ width: '100%', height: '80vh' }}
+    >
       <LoadingIcon />
     </Grid>
   ) : (
@@ -73,7 +77,7 @@ export function HotelMoreDetails({ hotelId, city }) {
               justify="center"
               alignItems="center"
             >
-              <RoomCard {...room} hotelId={hotel._id} />
+              <RoomCard room={room} hotelId={hotel._id} days={numberOfDays} />
             </Grid>
           </Container>
         )
