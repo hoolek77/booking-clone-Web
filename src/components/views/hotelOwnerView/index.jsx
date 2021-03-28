@@ -2,16 +2,21 @@ import React from 'react'
 import { isHotelOwnerVerified } from '../../../utils'
 import Menu from '../../shared/Menu'
 import { menuItems, classes } from './menuConfigHotelOwner'
-import '../../../content/css/hotelOwner.css'
 import AddHotel from './AddHotel'
 import ShowAll from './ShowAll'
+import Reservations from './Reservations'
 
 export const HotelOwnerView = ({ location }) => {
   const handleRouteChange = (path) => {
-    if (path === '/hotelOwner/addHotel') {
-      return <AddHotel />
-    } else if (path === '/hotelOwner/showAll' || path === '/hotelOwner') {
-      return <ShowAll />
+    switch (path) {
+      case '/hotelOwner/addHotel':
+        return <AddHotel />
+      case '/hotelOwner/showAll':
+        return <ShowAll />
+      case '/hotelOwner/reservations':
+        return <Reservations />
+      default:
+        return
     }
   }
 

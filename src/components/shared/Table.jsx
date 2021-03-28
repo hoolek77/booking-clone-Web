@@ -21,15 +21,19 @@ export function Table({
   setSelectedRows,
   pageSize,
   loading,
+  checkboxSelection = true,
 }) {
   const [selectionModel, setSelectionModel] = useState([])
+
   useEffect(() => {
+    if (!checkboxSelection) return
     setSelectedRows(selectionModel)
   }, [selectionModel])
+
   return (
     <div style={{ height, width }}>
       <DataGrid
-        checkboxSelection
+        checkboxSelection={checkboxSelection}
         onSelectionModelChange={(newSelection) => {
           setSelectionModel(newSelection.selectionModel)
         }}

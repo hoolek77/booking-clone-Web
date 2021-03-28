@@ -23,7 +23,7 @@ export const menuItems = [
     ],
   },
   {
-    location: '/',
+    location: '/hotelOwner/reservations',
     name: 'Reservations',
   },
 ]

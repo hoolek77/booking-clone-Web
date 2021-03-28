@@ -22,6 +22,12 @@
   height: 2.5rem;
 }
 
+.reservations-table {
+  width: 65%;
+  height: 28rem;
+  margin: 5rem auto;
+}
+
 @media screen and (max-width: 550px) {
   .room-step {
     display: flex;

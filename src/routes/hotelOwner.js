@@ -30,6 +30,11 @@ const hotelOwnerRoutes = [
     exact
     key="hotelOwner-route"
   />,
+  <PrivateRouteHotelOwner
+    path="/hotelOwner/reservations"
+    exact
+    key="hotelOwner-route"
+  />,
 ]
 
 export default hotelOwnerRoutes
