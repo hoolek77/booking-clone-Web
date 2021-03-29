@@ -9,10 +9,6 @@ export const menuItems = [
         name: 'Show All',
       },
       {
-        location: '/editMyHotels',
-        name: 'Edit Hotels',
-      },
-      {
         location: '/hotelOwner/addHotel',
         name: 'Add Hotels',
       },

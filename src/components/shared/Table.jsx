@@ -26,7 +26,7 @@ export function Table({
   const [selectionModel, setSelectionModel] = useState([])
 
   useEffect(() => {
-    if (!checkboxSelection) return
+    if (!setSelectedRows) return
     setSelectedRows(selectionModel)
   }, [selectionModel])
 
