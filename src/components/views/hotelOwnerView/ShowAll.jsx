@@ -93,12 +93,12 @@ const ShowAll = () => {
         global.API_BASE_URL + 'api/hotelOwner/hotels',
         'GET'
       )
-      console.log(hotels)
       setHotels(formatHotels(hotels))
       setPending({ state: false, type: 'tablePending' })
       setIsLoading(false)
     } catch (ex) {
-      alert(ex.message)
+      setAlert({ isAlert: true, msg: ex })
+      setIsLoading(false)
       setPending({ state: false, type: 'tablePending' })
     }
   }
