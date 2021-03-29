@@ -46,7 +46,7 @@ export const Hotels = ({ match, location }) => {
           <h1>{data.city ? data.city : ' Anywhere'}</h1>
           {hotels.hotels.map((hotel) => {
             const days = calculateDays()
-            return <HotelCard hotel={hotel} days={days} />
+            return <HotelCard hotel={hotel} days={days} data={data} />
           })}
         </>
       ) : (

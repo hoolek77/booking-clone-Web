@@ -9,18 +9,23 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 
 export default function Popup({
+  submitFormId,
+  buttonColor,
+  callbackFunction = () => true,
   buttonTitle,
   modalTitle,
   modalContent,
   buttonAgreeContent,
   buttonDisagreeContent,
   buttonAgreeFunction,
+  buttonAgreeDisabled = false,
   buttonDisagreeFunction,
 }) {
   const [open, setOpen] = React.useState(false)
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const handleClickOpen = () => {
+    if (!callbackFunction()) return
     setOpen(true)
   }
 
@@ -30,7 +35,14 @@ export default function Popup({
 
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        color={buttonColor}
+        onClick={() => {
+          handleClickOpen()
+        }}
+        style={{ margin: '5px' }}
+      >
         {buttonTitle}
       </Button>
       <Dialog
@@ -45,6 +57,16 @@ export default function Popup({
         </DialogContent>
         <DialogActions>
           <Button
+            onClick={buttonAgreeFunction && buttonAgreeFunction()}
+            color="primary"
+            autoFocus
+            type="submit"
+            form={submitFormId}
+            disabled={buttonAgreeDisabled}
+          >
+            {buttonAgreeContent}
+          </Button>
+          <Button
             autoFocus
             onClick={
               buttonDisagreeFunction
@@ -54,17 +76,6 @@ export default function Popup({
             color="primary"
           >
             {buttonDisagreeContent}
-          </Button>
-          <Button
-            onClick={
-              buttonAgreeFunction
-                ? (handleClose, buttonAgreeFunction)
-                : handleClose
-            }
-            color="primary"
-            autoFocus
-          >
-            {buttonAgreeContent}
           </Button>
         </DialogActions>
       </Dialog>

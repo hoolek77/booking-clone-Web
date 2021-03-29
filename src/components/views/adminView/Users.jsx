@@ -62,8 +62,8 @@ export const Users = ({ columns, useStyles }) => {
       return
     }
 
-    setOpenError(false)
-    setOpenSuccess(false)
+    setOpenError({ ...openError, status: false })
+    setOpenSuccess({ ...openSuccess, status: false })
   }
 
   const getUsers = async () => {
@@ -121,14 +121,18 @@ export const Users = ({ columns, useStyles }) => {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert severity="error">{openError.message}</Alert>
+        <Alert severity="error" onClose={handleClose}>
+          {openError.message}
+        </Alert>
       </Snackbar>
       <Snackbar
         open={openSuccess.status}
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert severity="success">{openSuccess.message}</Alert>
+        <Alert severity="success" onClose={handleClose}>
+          {openSuccess.message}
+        </Alert>
       </Snackbar>
     </div>
   )

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function HotelCard({ hotel, days }) {
+export function HotelCard({ hotel, days, data }) {
   const classes = useStyles()
 
   return (
@@ -59,7 +59,7 @@ export function HotelCard({ hotel, days }) {
           <Link
             to={{
               pathname: `/hotels/${hotel.localization.city}/${hotel._id}`,
-              state: days,
+              state: { days, data },
             }}
             className={`MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-22 MuiButton-containedPrimary ${classes.button}`}
           >

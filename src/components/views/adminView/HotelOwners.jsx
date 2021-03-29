@@ -60,8 +60,8 @@ export const HotelOwners = ({ columns, useStyles }) => {
       return
     }
 
-    setOpenError({ status: false, message: '' })
-    setOpenSuccess({ status: false, message: '' })
+    setOpenError({ status: false })
+    setOpenSuccess({ status: false })
   }
 
   const getUsers = async () => {
@@ -130,14 +130,18 @@ export const HotelOwners = ({ columns, useStyles }) => {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert severity="error">{openError.message}</Alert>
+        <Alert severity="error" onClose={handleClose}>
+          {openError.message}
+        </Alert>
       </Snackbar>
       <Snackbar
         open={openSuccess.status}
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert severity="success">{openSuccess.message}</Alert>
+        <Alert severity="success" onClose={handleClose}>
+          {openSuccess.message}
+        </Alert>
       </Snackbar>
     </div>
   )
