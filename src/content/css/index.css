@@ -20,3 +20,7 @@ code {
   position: relative;
   padding-bottom: 5vh;
 }
+
+#outlined-basic {
+  color: #ebb15f;
+}
