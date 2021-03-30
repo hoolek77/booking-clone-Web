@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SearchBar = ({ onSearchSubmit }) => {
+const SearchBar = () => {
   const classes = useStyles()
 
   const [city, setCity] = useState('Anywhere')

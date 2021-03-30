@@ -28,7 +28,8 @@ export function HotelMoreDetails({ hotelId, city, location }) {
   const classes = useStyles()
   const [hotel, setHotel] = useState(null)
   const [loading, setLoading] = useState(true)
-  const numberOfDays = location.state
+  const numberOfDays = location?.state?.days
+  const data = location?.state?.data
 
   const getHotel = async () => {
     try {
@@ -77,7 +78,13 @@ export function HotelMoreDetails({ hotelId, city, location }) {
               justify="center"
               alignItems="center"
             >
-              <RoomCard room={room} hotelId={hotel._id} days={numberOfDays} />
+              <RoomCard
+                room={room}
+                hotelId={hotel._id}
+                numberOfDays={numberOfDays}
+                hotelData={hotel}
+                data={data}
+              />
             </Grid>
           </Container>
         )
