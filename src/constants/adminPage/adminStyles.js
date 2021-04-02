@@ -29,4 +29,12 @@ export const adminStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
+  input: {
+    position: 'relative',
+    top: '10px',
+    left: '20px',
+  },
+  grid: {
+    height: '30%',
+  },
 }))

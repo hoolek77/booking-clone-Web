@@ -14,6 +14,10 @@ const routes = [
     location: '/admin/reservations',
     name: 'Reservations',
   },
+  {
+    location: '/admin/cities',
+    name: 'Add City',
+  },
 ]
 
 const classes = {
