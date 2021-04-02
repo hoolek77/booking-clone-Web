@@ -35,6 +35,7 @@ const SearchBar = () => {
     endDate,
     adults,
     children,
+    isAvailable: true,
   }
 
   const submit = (e) => {

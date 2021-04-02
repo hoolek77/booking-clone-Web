@@ -26,7 +26,6 @@ export const Hotels = ({ match, location }) => {
   const [hotels, search] = useSearch()
   const [loading, setLoading] = useState(false)
   const [days, setDays] = useState()
-  const [resData, setResData] = useState()
 
   const query = new URLSearchParams(location.search)
   const page = parseInt(query.get('pageNumber') || '1', 10)
@@ -35,6 +34,8 @@ export const Hotels = ({ match, location }) => {
   data = !data.startDate && data.city === 'Anywhere' ? '' : data
 
   data = { ...data, pageNumber: page }
+
+  const [resData, setResData] = useState(data)
 
   const calculateDays = () => {
     return data.startDate
@@ -45,11 +46,11 @@ export const Hotels = ({ match, location }) => {
   }
   useEffect(() => {
     setDays(calculateDays())
-    setResData({ ...data, city: '' })
+    setResData(data)
   }, [])
 
   useEffect(() => {
-    search(data, setLoading)
+    search(resData, setLoading, resData.isAvailable)
   }, [page])
 
   return (

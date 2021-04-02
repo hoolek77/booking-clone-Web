@@ -7,7 +7,8 @@ export const useSearch = () => {
 
   const search = async (
     { city, startDate, endDate, adults, children, pageNumber },
-    setLoading
+    setLoading,
+    available = false
   ) => {
     let data = {}
     if (!startDate || !endDate) {
@@ -30,7 +31,9 @@ export const useSearch = () => {
 
     try {
       setLoading(true)
-      const response = await axios.get(global.API_BASE_URL + 'api/hotels', {
+
+      const ENDPOINT = available ? 'api/hotels/getAvailable' : 'api/hotels'
+      const response = await axios.get(global.API_BASE_URL + ENDPOINT, {
         params: data,
       })
 
