@@ -1,17 +1,20 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { DEFAULT_PAGE_SIZE } from '../constants/'
 
 export const useSearch = () => {
   const [hotels, setHotels] = useState([])
 
   const search = async (
-    { city, startDate, endDate, adults, children },
+    { city, startDate, endDate, adults, children, pageNumber },
     setLoading
   ) => {
     let data = {}
     if (!startDate || !endDate) {
       data = {
         city,
+        pageSize: DEFAULT_PAGE_SIZE,
+        pageNumber,
       }
     } else {
       data = {
@@ -20,6 +23,8 @@ export const useSearch = () => {
         endDate: new Date(endDate).toISOString(),
         adults,
         children,
+        pageSize: DEFAULT_PAGE_SIZE,
+        pageNumber,
       }
     }
 
