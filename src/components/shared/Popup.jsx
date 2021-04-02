@@ -20,8 +20,9 @@ export default function Popup({
   buttonAgreeFunction,
   buttonAgreeDisabled = false,
   buttonDisagreeFunction,
+  open,
+  setOpen,
 }) {
-  const [open, setOpen] = React.useState(false)
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const handleClickOpen = () => {
