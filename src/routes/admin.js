@@ -27,6 +27,12 @@ const adminRoutes = [
     render={(props) => <AdminView {...props} />}
     exact
   />,
+  <Route
+    path="/admin/cities"
+    key="admin-route-cities"
+    render={(props) => <AdminView {...props} />}
+    exact
+  />,
 ]
 
 export default adminRoutes

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { HotelCard } from '../../HotelCard'
 import { CircularProgress, makeStyles } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { useSearch } from '../../../hooks'
+import { Pagination, PaginationItem } from '@material-ui/lab'
 
 const useStyles = makeStyles((theme) => ({
   center: {
@@ -13,15 +15,27 @@ const useStyles = makeStyles((theme) => ({
   container: {
     padding: 20,
   },
+  pagination: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 }))
 
 export const Hotels = ({ match, location }) => {
   const classes = useStyles()
   const [hotels, search] = useSearch()
   const [loading, setLoading] = useState(false)
+  const [days, setDays] = useState()
+
+  const query = new URLSearchParams(location.search)
+  const page = parseInt(query.get('pageNumber') || '1', 10)
 
   let data = location.state ? location.state : { city: match.params.data }
   data = !data.startDate && data.city === 'Anywhere' ? '' : data
+
+  data = { ...data, pageNumber: page }
+
+  const [resData, setResData] = useState(data)
 
   const calculateDays = () => {
     return data.startDate
@@ -31,8 +45,13 @@ export const Hotels = ({ match, location }) => {
       : 1
   }
   useEffect(() => {
-    search(data, setLoading)
+    setDays(calculateDays())
+    setResData(data)
   }, [])
+
+  useEffect(() => {
+    search(resData, setLoading, resData.isAvailable)
+  }, [page])
 
   return (
     <div className={classes.container}>
@@ -44,10 +63,60 @@ export const Hotels = ({ match, location }) => {
       ) : hotels.hotels?.length > 0 ? (
         <>
           <h1>{data.city ? data.city : ' Anywhere'}</h1>
-          {hotels.hotels.map((hotel) => {
-            const days = calculateDays()
-            return <HotelCard hotel={hotel} days={days} data={data} />
+          <Pagination
+            page={page}
+            count={hotels.pages}
+            className={classes.pagination}
+            style={{ display: hotels.pages === 1 ? 'none' : 'flex' }}
+            color="secondary"
+            renderItem={(item) => (
+              <PaginationItem
+                component={Link}
+                style={{
+                  textDecoration: 'none',
+                  '&:hover': {
+                    textDecoration: 'center',
+                  },
+                }}
+                to={`/hotels/${data.city || 'Anywhere'}${
+                  item.page === 1 ? '' : `?pageNumber=${item.page}`
+                }`}
+                {...item}
+              />
+            )}
+          />
+          {hotels.hotels.map((hotel, index) => {
+            return (
+              <HotelCard
+                hotel={hotel}
+                days={days}
+                data={resData}
+                key={hotel?.name + index}
+              />
+            )
           })}
+          <Pagination
+            page={page}
+            count={hotels.pages}
+            className={classes.pagination}
+            color="secondary"
+            style={{ display: hotels.pages === 1 ? 'none' : 'flex' }}
+            renderItem={(item) => (
+              <PaginationItem
+                component={Link}
+                style={{
+                  textDecoration: 'none',
+                  '&:hover': {
+                    textDecoration: 'center',
+                  },
+                }}
+                to={`/hotels/${data.city || 'Anywhere'}${
+                  item.page === 1 ? '' : `?pageNumber=${item.page}`
+                }`}
+                {...item}
+              />
+            )}
+          />
         </>
       ) : (
         <h1>No hotels found in {data.city}</h1>

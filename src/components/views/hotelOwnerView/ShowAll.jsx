@@ -97,7 +97,7 @@ const ShowAll = () => {
       setPending({ state: false, type: 'tablePending' })
       setIsLoading(false)
     } catch (ex) {
-      setAlert({ isAlert: true, msg: ex })
+      setAlert({ isAlert: true, msg: ex, severity: 'error' })
       setIsLoading(false)
       setPending({ state: false, type: 'tablePending' })
     }
@@ -141,7 +141,7 @@ const ShowAll = () => {
         autoHideDuration={3000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity="error">
+        <Alert onClose={handleClose} severity={alert.severity}>
           {alert.msg}
         </Alert>
       </Snackbar>

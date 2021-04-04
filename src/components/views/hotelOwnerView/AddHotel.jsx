@@ -122,6 +122,9 @@ const AddHotel = () => {
           type="submit"
           value="BasicInformation"
           onClick={() => {
+            if (rooms.length === 0) {
+              return validateError('Hotel must contain at least 1 room.')
+            }
             handleSubmit()
             setLoadingCircle(true)
           }}

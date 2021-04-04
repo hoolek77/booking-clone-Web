@@ -3,6 +3,7 @@ import { isAdmin } from '../../../utils'
 import { AdminMenu } from './AdminMenu'
 import { HotelOwners } from './HotelOwners'
 import { Reservations } from './Reservations'
+import { Cities } from './Cities'
 import { Users } from './Users'
 import {
   ADMIN_PATHNAMES,
@@ -25,6 +26,7 @@ export class AdminView extends React.Component {
       return <Users columns={usersColumns} useStyles={useStyles} />
     if (path === ADMIN_PATHNAMES.HOTELOWNERS)
       return <HotelOwners columns={hotelOwnerColumns} useStyles={useStyles} />
+    if (path === ADMIN_PATHNAMES.CITIES) return <Cities useStyles={useStyles} />
     if (path === ADMIN_PATHNAMES.RESERVATIONS) return <Reservations />
     if (!path) return <WelcomePage useStyles={useStyles} />
   }

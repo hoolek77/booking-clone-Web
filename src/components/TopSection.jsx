@@ -5,21 +5,12 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 import { COOKIE_TOKEN, HOTEL_OWNER_ROLE } from '../constants'
-import { getUserInfo, removeCookie, isUserLoggedIn } from '../utils'
+import { removeCookie } from '../utils'
 import { Login } from './Login'
+import { useUserStatus } from '../hooks'
 
 export const TopSection = () => {
-  const [userInfo, setUserInfo] = useState({})
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-  useEffect(() => {
-    const isLogged = isUserLoggedIn()
-    if (isLogged) {
-      const data = getUserInfo()
-      setUserInfo(data)
-      setIsLoggedIn(true)
-    }
-  }, [])
+  const [isLogged, userInfo] = useUserStatus()
 
   const logout = () => {
     localStorage.clear('userInfo')
@@ -35,7 +26,7 @@ export const TopSection = () => {
         </a>
       </Grid>
 
-      {isLoggedIn ? (
+      {isLogged ? (
         <div className="loginUserInfo">
           Willkommen {userInfo.firstName} {userInfo.lastName} !
           <Link to={`/${userInfo.role}`} style={{ textDecoration: 'none' }}>
