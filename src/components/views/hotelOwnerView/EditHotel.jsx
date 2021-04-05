@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { fetchData, handleRoomAdd } from '../../../utils'
-import TextField from '@material-ui/core/TextField'
 import LoadingIcon from '../../shared/LoadingIcon'
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import { Button, Box, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router'
 import Popup from '../../shared/Popup'
 import AddRoom from './AddRoom'
@@ -115,7 +114,11 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
       })
       history.go(0)
     } catch (ex) {
-      setAlert({ isAlert: true, msg: ex, severity: 'error' })
+      setAlert({
+        isAlert: true,
+        msg: 'something went wrong',
+        severity: 'error',
+      })
     }
   }
 
@@ -129,7 +132,11 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
       setIsLoading(false)
     } catch (ex) {
       setIsLoading(false)
-      setAlert({ isAlert: true, msg: ex, severity: 'error' })
+      setAlert({
+        isAlert: true,
+        msg: 'something went wrong',
+        severity: 'error',
+      })
     }
   }
 
@@ -151,119 +158,144 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
       ) : (
         <>
           <h2 style={{ marginTop: '2rem' }}>Edit Hotel</h2>
-          <TextField
-            id="standard"
-            label="Hotel Name"
-            defaultValue={hotel.name}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                name: e.target.value,
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            label="Email"
-            defaultValue={hotel.email}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                email: e.target.value,
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            label="Phone Number"
-            type="number"
-            defaultValue={hotel.phoneNumber}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                phoneNumber: e.target.value,
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            label="Country"
-            defaultValue={hotel.localization.country}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                localization: {
-                  ...hotel.localization,
-                  country: e.target.value,
-                },
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            label="City"
-            defaultValue={hotel.localization.city}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                localization: {
-                  ...hotel.localization,
-                  city: e.target.value,
-                },
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            label="Street"
-            defaultValue={hotel.localization.street}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                localization: {
-                  ...hotel.localization,
-                  street: e.target.value,
-                },
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            type="number"
-            label="Building Number"
-            defaultValue={hotel.localization.buildingNumber}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                localization: {
-                  ...hotel.localization,
-                  buildingNumber: e.target.value,
-                },
-              })
-            }
-          />
-          <TextField
-            id="standard"
-            label="Zip Code"
-            defaultValue={hotel.localization.zipcode}
-            className={classes.input}
-            onChange={(e) =>
-              setHotel({
-                ...hotel,
-                localization: {
-                  ...hotel.localization,
-                  zipcode: e.target.value,
-                },
-              })
-            }
-          />
+          <Box
+            className="hotel-info hotel-edit__field"
+            boxShadow={3}
+            borderRadius={5}
+          >
+            <h4 className="hotel-edit__heading">Info:</h4>
+            <TextField
+              id="standard"
+              label="Hotel Name"
+              defaultValue={hotel.name}
+              className={classes.input}
+              onChange={(e) =>
+                setHotel({
+                  ...hotel,
+                  name: e.target.value,
+                })
+              }
+            />
+          </Box>
+          <Box
+            className="hotel-contact hotel-edit__field"
+            boxShadow={3}
+            borderRadius={5}
+          >
+            <h4 className="hotel-edit__heading">Contact:</h4>
+            <TextField
+              id="standard"
+              label="Email"
+              defaultValue={hotel.email}
+              className={classes.input}
+              onChange={(e) =>
+                setHotel({
+                  ...hotel,
+                  email: e.target.value,
+                })
+              }
+            />
+            <TextField
+              id="standard"
+              label="Phone Number"
+              type="number"
+              defaultValue={hotel.phoneNumber}
+              className={classes.input}
+              onChange={(e) =>
+                setHotel({
+                  ...hotel,
+                  phoneNumber: e.target.value,
+                })
+              }
+            />
+          </Box>
+          <Box
+            className="hotel-localization hotel-edit__field"
+            boxShadow={3}
+            borderRadius={5}
+          >
+            <h4 className="hotel-edit__heading">Localization:</h4>
+            <div className="hotel-edit__row">
+              <TextField
+                id="standard"
+                label="Country"
+                defaultValue={hotel.localization.country}
+                className={classes.input}
+                onChange={(e) =>
+                  setHotel({
+                    ...hotel,
+                    localization: {
+                      ...hotel.localization,
+                      country: e.target.value,
+                    },
+                  })
+                }
+              />
+              <TextField
+                id="standard"
+                label="City"
+                defaultValue={hotel.localization.city}
+                className={classes.input}
+                onChange={(e) =>
+                  setHotel({
+                    ...hotel,
+                    localization: {
+                      ...hotel.localization,
+                      city: e.target.value,
+                    },
+                  })
+                }
+              />
+            </div>
+            <div className="hotel-edit__row">
+              <TextField
+                id="standard"
+                label="Street"
+                defaultValue={hotel.localization.street}
+                className={classes.input}
+                onChange={(e) =>
+                  setHotel({
+                    ...hotel,
+                    localization: {
+                      ...hotel.localization,
+                      street: e.target.value,
+                    },
+                  })
+                }
+              />
+              <TextField
+                id="standard"
+                type="number"
+                label="Building Number"
+                defaultValue={hotel.localization.buildingNumber}
+                className={classes.input}
+                onChange={(e) =>
+                  setHotel({
+                    ...hotel,
+                    localization: {
+                      ...hotel.localization,
+                      buildingNumber: e.target.value,
+                    },
+                  })
+                }
+              />
+            </div>
+            <TextField
+              id="standard"
+              label="Zip Code"
+              defaultValue={hotel.localization.zipcode}
+              className={classes.input}
+              onChange={(e) =>
+                setHotel({
+                  ...hotel,
+                  localization: {
+                    ...hotel.localization,
+                    zipcode: e.target.value,
+                  },
+                })
+              }
+            />
+          </Box>
           <Popup
             buttonTitle={'Add Room'}
             modalContent={

@@ -22,6 +22,7 @@ export default function Popup({
   buttonDisagreeFunction,
   open,
   setOpen,
+  isButton = true,
 }) {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -36,16 +37,19 @@ export default function Popup({
 
   return (
     <div>
-      <Button
-        variant="contained"
-        color={buttonColor}
-        onClick={() => {
-          handleClickOpen()
-        }}
-        style={{ margin: '5px' }}
-      >
-        {buttonTitle}
-      </Button>
+      {isButton && (
+        <Button
+          variant="contained"
+          color={buttonColor}
+          onClick={() => {
+            handleClickOpen()
+          }}
+          style={{ margin: '5px' }}
+        >
+          {buttonTitle}
+        </Button>
+      )}
+
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -58,7 +62,7 @@ export default function Popup({
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={buttonAgreeFunction && buttonAgreeFunction()}
+            onClick={buttonAgreeFunction && buttonAgreeFunction}
             color="primary"
             autoFocus
             type="submit"

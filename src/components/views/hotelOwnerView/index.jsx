@@ -5,6 +5,7 @@ import { menuItems, classes } from './menuConfigHotelOwner'
 import AddHotel from './AddHotel'
 import ShowAll from './ShowAll'
 import Reservations from './Reservations'
+import { RemoveHotels } from './RemoveHotels'
 
 export const HotelOwnerView = ({ location }) => {
   const handleRouteChange = (path) => {
@@ -15,6 +16,8 @@ export const HotelOwnerView = ({ location }) => {
         return <ShowAll />
       case '/hotelOwner/reservations':
         return <Reservations />
+      case '/hotelOwner/removeMyHotels':
+        return <RemoveHotels />
       default:
         return
     }

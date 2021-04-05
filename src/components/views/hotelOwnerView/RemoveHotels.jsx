@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Table } from '../../shared/Table'
 import { fetchData } from '../../../utils'
-import CreateIcon from '@material-ui/icons/Create'
+import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import EditHotel from './EditHotel'
 import LoadingIcon from '../../shared/LoadingIcon'
 import Snackbar from '@material-ui/core/Snackbar'
 import { Alert } from '../../shared/Alert'
+import { Checkbox, FormControlLabel, makeStyles } from '@material-ui/core'
+import Popup from '../../shared/Popup'
 
 const hotelsColumns = (onClick) => [
   {
@@ -16,7 +18,7 @@ const hotelsColumns = (onClick) => [
     renderCell: () => {
       return (
         <IconButton aria-label="comments" onClick={onClick}>
-          <CreateIcon />
+          <DeleteIcon style={{ color: '#f44336' }} />
         </IconButton>
       )
     },
@@ -26,16 +28,15 @@ const hotelsColumns = (onClick) => [
   { field: 'email', headerName: 'Email', width: 200 },
   { field: 'phoneNumber', headerName: 'Phone Number', width: 200 },
   { field: 'adress', headerName: 'Adress', width: 200 },
-  { field: 'createdAt', headerName: 'Created At', width: 200 },
-  { field: 'updatedAt', headerName: 'Updated At', width: 200 },
 ]
 
-const ShowAll = () => {
+export const RemoveHotels = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [alert, setAlert] = useState({ isAlert: false, msg: '' })
-  const [isTable, setIsTable] = useState(true)
   const [hotels, setHotels] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
+  const [open, setOpen] = useState(false)
+  const [isForceDelete, setIsForceDelete] = useState(false)
   const [pending, setPending] = useState({
     state: false,
     type: 'tablePending',
@@ -49,29 +50,9 @@ const ShowAll = () => {
     setAlert({ ...alert, isAlert: false })
   }
 
-  const getDate = (date) => {
-    const notFormatted = new Date(date).toString()
-    return notFormatted.slice(0, 15)
-  }
-
-  const handleEditOnClick = useCallback(() => {
-    setTimeout(() => {
-      setIsTable(false)
-    }, 20)
-  }, [])
-
   const formatHotels = (data) => {
     return data.map(
-      ({
-        _id,
-        name,
-        rooms,
-        email,
-        phoneNumber,
-        localization,
-        createdAt,
-        updatedAt,
-      }) => {
+      ({ _id, name, rooms, email, phoneNumber, localization }) => {
         return {
           id: _id,
           hotelName: name,
@@ -79,8 +60,6 @@ const ShowAll = () => {
           email,
           phoneNumber,
           adress: `${localization.city} ${localization.street} ${localization.buildingNumber}`,
-          createdAt: getDate(createdAt),
-          updatedAt: getDate(updatedAt),
         }
       }
     )
@@ -97,12 +76,28 @@ const ShowAll = () => {
       setPending({ state: false, type: 'tablePending' })
       setIsLoading(false)
     } catch (ex) {
-      setAlert({
-        isAlert: true,
-        msg: 'Something went wrong',
-        severity: 'error',
-      })
+      setAlert({ isAlert: true, msg: ex, severity: 'error' })
       setIsLoading(false)
+      setPending({ state: false, type: 'tablePending' })
+    }
+  }
+
+  const handleDeleteHotel = async () => {
+    setPending({ state: true, type: 'tablePending' })
+    try {
+      const id = selectedRows[0]
+      await fetchData(
+        global.API_BASE_URL +
+          `api/hotelOwner/hotels/${id}?forceDelete=${isForceDelete}`,
+        'DELETE'
+      )
+      setOpen(false)
+      getHotels()
+      setPending({ state: false, type: 'tablePending' })
+      setAlert({ isAlert: true, msg: 'Hotel deleted!', severity: 'success' })
+    } catch (err) {
+      setOpen(false)
+      setAlert({ isAlert: true, msg: err.message, severity: 'error' })
       setPending({ state: false, type: 'tablePending' })
     }
   }
@@ -117,27 +112,19 @@ const ShowAll = () => {
         <LoadingIcon style={{ position: 'absolute', top: '25vh' }} />
       ) : (
         <>
-          {isTable ? (
-            <div className="hotel-owner-table">
-              <Table
-                rows={hotels}
-                columns={hotelsColumns(handleEditOnClick)}
-                height="100%"
-                width="100%"
-                pageSize={6}
-                checkboxSelection={false}
-                loading={pending}
-                setSelectedRows={setSelectedRows}
-                selectedRows={selectedRows}
-              />
-            </div>
-          ) : (
-            <EditHotel
-              id={selectedRows}
-              setIsTable={setIsTable}
-              setAlert={setAlert}
+          <div className="hotel-owner-table">
+            <Table
+              rows={hotels}
+              columns={hotelsColumns(() => setOpen(true))}
+              height="100%"
+              width="100%"
+              pageSize={6}
+              checkboxSelection={false}
+              loading={pending}
+              setSelectedRows={setSelectedRows}
+              selectedRows={selectedRows}
             />
-          )}
+          </div>
         </>
       )}
       <Snackbar
@@ -149,8 +136,24 @@ const ShowAll = () => {
           {alert.msg}
         </Alert>
       </Snackbar>
+      <Popup
+        open={open}
+        setOpen={setOpen}
+        isButton={false}
+        modalTitle="Are you sure to remove this hotel?"
+        modalContent={
+          <FormControlLabel
+            value={isForceDelete}
+            control={<Checkbox color="primary" />}
+            label="Force Delete"
+            labelPlacement="end"
+            onClick={() => setIsForceDelete(!isForceDelete)}
+          />
+        }
+        buttonAgreeContent="Remove"
+        buttonDisagreeContent="Cancel"
+        buttonAgreeFunction={handleDeleteHotel}
+      />
     </div>
   )
 }
-
-export default ShowAll
