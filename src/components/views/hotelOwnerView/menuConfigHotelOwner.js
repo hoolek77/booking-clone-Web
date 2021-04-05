@@ -13,7 +13,7 @@ export const menuItems = [
         name: 'Add Hotels',
       },
       {
-        location: '/removeMyHotels',
+        location: '/hotelOwner/removeMyHotels',
         name: 'Remove Hotels',
       },
     ],
