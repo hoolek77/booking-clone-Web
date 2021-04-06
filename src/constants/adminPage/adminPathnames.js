@@ -3,4 +3,5 @@ export const ADMIN_PATHNAMES = {
   HOTELOWNERS: '/admin/hotelowners',
   RESERVATIONS: '/admin/reservations',
   CITIES: '/admin/cities',
+  GETCITIES: '/admin/getCities',
 }

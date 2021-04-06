@@ -15,8 +15,19 @@ const routes = [
     name: 'Reservations',
   },
   {
-    location: '/admin/cities',
-    name: 'Add City',
+    type: 'dropdown',
+    name: 'City',
+    location: '/',
+    dropdownItems: [
+      {
+        location: '/admin/cities',
+        name: 'Add City',
+      },
+      {
+        location: '/admin/getCities',
+        name: 'Get Cities',
+      },
+    ],
   },
 ]
 
