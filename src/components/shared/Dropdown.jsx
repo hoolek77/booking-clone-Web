@@ -7,11 +7,22 @@ export const Dropdown = ({ dropdownItems, classes }) => {
     <>
       {dropdownItems.map((item) => {
         const { location, name } = item
+
         return (
-          <NavDropdown.Item className={classes.navDropdownItem}>
+          <NavDropdown.Item
+            className={`${classes.navDropdownItem} nav-dropdown ${
+              window.location.pathname === item.location
+                ? 'nav-link__active'
+                : null
+            }`}
+          >
             <Link
               to={location}
-              className={`nav-link ${classes.NavDropdownLink}`}
+              className={`nav-link ${classes.NavDropdownLink} ${
+                window.location.pathname === item.location
+                  ? 'nav-link__active'
+                  : null
+              }`}
             >
               {name}
             </Link>

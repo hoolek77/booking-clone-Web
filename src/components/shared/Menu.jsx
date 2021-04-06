@@ -4,44 +4,6 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 
 import { Dropdown } from './Dropdown'
 
-// EXAMPLE USAGE:
-
-// import Menu from './shared/Menu'
-
-// const routes = [
-//   {
-//     location: '/',
-//     name: 'Main Page',
-//   },
-//   {
-//     location: '/register',
-//     name: 'Register',
-//   },
-//   {
-//     location: '/',
-//     name: 'test',
-//     type: 'dropdown',
-//     dropdownItems: [
-//       {
-//         location: '/',
-//         name: 'Main Page',
-//       },
-//       {
-//         location: '/register',
-//         name: 'Register',
-//       },
-//     ],
-//   },
-// ]
-
-// const classes = {
-//   navBar: 'bg-light',
-// }
-
-// const component = () => {
-//   return <Menu menuItems={routes} cssClasses={classes} />
-// }
-
 const Menu = ({ menuItems, cssClasses }) => {
   const classes = cssClasses ? cssClasses : {}
   return (
@@ -54,7 +16,7 @@ const Menu = ({ menuItems, cssClasses }) => {
               <NavDropdown
                 title={name}
                 id="basic-nav-dropdown"
-                className={`${classes.navDropdown}`}
+                className={classes.navDropdown}
               >
                 <Dropdown
                   dropdownItems={menuItem.dropdownItems}
@@ -65,7 +27,11 @@ const Menu = ({ menuItems, cssClasses }) => {
           } else {
             return (
               <Link
-                className={`nav-link ${classes.navLink}`}
+                className={`nav-link ${classes.navLink} ${
+                  window.location.pathname === menuItem.location
+                    ? 'nav-link__active'
+                    : null
+                }`}
                 to={location}
                 key={menuItem.name}
               >
