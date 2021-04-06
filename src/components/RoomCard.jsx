@@ -51,6 +51,7 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
     adults: data?.adults,
     children: data?.children,
   })
+  const [popupOpen, setPopupOpen] = useState(false)
   const [openSnackbar, setOpenSnackbar] = useState({
     status: false,
     content: '',
@@ -165,6 +166,8 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
             buttonAgreeDisabled={isDone}
             buttonDisagreeContent="Cancel"
             submitFormId="reservation-form"
+            open={popupOpen}
+            setOpen={setPopupOpen}
             modalContent={
               <form id="reservation-form" onSubmit={createReservation}>
                 <Grid

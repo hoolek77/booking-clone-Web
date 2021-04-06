@@ -6,6 +6,9 @@ import { Button, Box, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router'
 import Popup from '../../shared/Popup'
 import AddRoom from './AddRoom'
+import { useFindCities } from '../../../hooks'
+import { SELECT_MENU_PROPS } from '../../../constants'
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -25,6 +28,8 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
   const [popupOpen, setPopupOpen] = useState(false)
   const classes = useStyles()
   const history = useHistory()
+
+  const [cities, isPending] = useFindCities()
 
   const validate = () => {
     if (!hotel.name) {
@@ -144,6 +149,17 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
     getHotel()
   }, [])
 
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight:
+          SELECT_MENU_PROPS.ITEM_HEIGHT * 4.5 +
+          SELECT_MENU_PROPS.ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  }
+
   return (
     <div
       style={{
@@ -231,21 +247,41 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
                   })
                 }
               />
-              <TextField
-                id="standard"
-                label="City"
-                defaultValue={hotel.localization.city}
-                className={classes.input}
-                onChange={(e) =>
-                  setHotel({
-                    ...hotel,
-                    localization: {
-                      ...hotel.localization,
-                      city: e.target.value,
-                    },
-                  })
-                }
-              />
+              {isPending ? (
+                <LoadingIcon />
+              ) : (
+                <>
+                  <FormControl className={classes.input}>
+                    <InputLabel id="demo-simple-select-label">City</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      onChange={(e) =>
+                        setHotel({
+                          ...hotel,
+                          localization: {
+                            ...hotel.localization,
+                            city: e.target.value,
+                          },
+                        })
+                      }
+                      value={hotel.localization.city}
+                      defaultValue={hotel.localization.city}
+                      color="primary"
+                      required
+                      MenuProps={MenuProps}
+                    >
+                      {cities.map(({ name }, index) => {
+                        return (
+                          <MenuItem value={name} key={index + name}>
+                            {name}
+                          </MenuItem>
+                        )
+                      })}
+                    </Select>
+                  </FormControl>
+                </>
+              )}
             </div>
             <div className="hotel-edit__row">
               <TextField

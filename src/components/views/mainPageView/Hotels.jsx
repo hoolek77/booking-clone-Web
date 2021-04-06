@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { HotelCard } from '../../HotelCard'
 import { CircularProgress, makeStyles } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { useSearch } from '../../../hooks'
 import { Pagination, PaginationItem } from '@material-ui/lab'
 
@@ -26,6 +26,7 @@ export const Hotels = ({ match, location }) => {
   const [hotels, search] = useSearch()
   const [loading, setLoading] = useState(false)
   const [days, setDays] = useState()
+  // const [page, setPage] = useState(1)
 
   const query = new URLSearchParams(location.search)
   const page = parseInt(query.get('pageNumber') || '1', 10)
@@ -46,12 +47,20 @@ export const Hotels = ({ match, location }) => {
   }
   useEffect(() => {
     setDays(calculateDays())
-    setResData(data)
   }, [])
 
   useEffect(() => {
-    search(resData, setLoading, resData.isAvailable)
+    setResData({ ...resData, pageNumber: page })
+    search({ ...resData, pageNumber: page }, setLoading, resData.isAvailable)
   }, [page])
+
+  const setPathname = (item) => {
+    const path =
+      '/hotels/' +
+      (data.city || 'Anywhere') +
+      (item.page === 1 ? '' : `?pageNumber=${item.page}`)
+    return path
+  }
 
   return (
     <div className={classes.container}>
@@ -78,9 +87,7 @@ export const Hotels = ({ match, location }) => {
                     textDecoration: 'center',
                   },
                 }}
-                to={`/hotels/${data.city || 'Anywhere'}${
-                  item.page === 1 ? '' : `?pageNumber=${item.page}`
-                }`}
+                to={setPathname(item)}
                 {...item}
               />
             )}

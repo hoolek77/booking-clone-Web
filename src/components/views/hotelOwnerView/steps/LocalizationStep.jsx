@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
+import LoadingIcon from '../../../shared/LoadingIcon'
+import { InputLabel, MenuItem, Select } from '@material-ui/core'
+import { SELECT_MENU_PROPS } from '../../../../constants'
+import { useFindCities } from '../../../../hooks'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -20,8 +24,21 @@ export const LocalizationStep = ({
   setZipcode,
   setBuildingNumber,
   setStreet,
+  city,
 }) => {
   const classes = useStyles()
+  const [cities, isPending] = useFindCities()
+
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight:
+          SELECT_MENU_PROPS.ITEM_HEIGHT * 4.5 +
+          SELECT_MENU_PROPS.ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  }
 
   return (
     <form className={classes.form} noValidate autoComplete="off">
@@ -30,11 +47,30 @@ export const LocalizationStep = ({
         label="Country"
         onChange={(e) => setCountry(e.target.value)}
       />
-      <TextField
-        id="standard-basic"
-        label="City"
-        onChange={(e) => setCity(e.target.value)}
-      />
+      {isPending ? (
+        <LoadingIcon />
+      ) : (
+        <>
+          <InputLabel id="demo-simple-select-label">City</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            onChange={(e) => setCity(e.target.value)}
+            value={city}
+            color="secondary"
+            required
+            MenuProps={MenuProps}
+          >
+            {cities.map(({ name }, index) => {
+              return (
+                <MenuItem value={name} key={index + name}>
+                  {name}
+                </MenuItem>
+              )
+            })}
+          </Select>
+        </>
+      )}
       <TextField
         id="standard-basic"
         label="Street"

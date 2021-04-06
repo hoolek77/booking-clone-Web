@@ -51,7 +51,7 @@ const AddHotel = () => {
   const [email, setEmail] = useState()
   const [phoneNumber, setPhoneNumber] = useState()
   const [country, setCountry] = useState()
-  const [city, setCity] = useState()
+  const [city, setCity] = useState('Anywhere')
   const [zipcode, setZipcode] = useState()
   const [street, setStreet] = useState()
   const [buildingNumber, setBuildingNumber] = useState()
@@ -154,6 +154,7 @@ const AddHotel = () => {
             setZipcode={setZipcode}
             setStreet={setStreet}
             setBuildingNumber={setBuildingNumber}
+            city={city}
           />
         )
       case 2:

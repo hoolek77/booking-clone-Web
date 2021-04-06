@@ -1,0 +1,4 @@
+export const SELECT_MENU_PROPS = {
+  ITEM_HEIGHT: 48,
+  ITEM_PADDING_TOP: 8,
+}
