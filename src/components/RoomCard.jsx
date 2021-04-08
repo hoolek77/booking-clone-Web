@@ -1,12 +1,17 @@
-import React, { useContext, useState } from 'react'
-
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useState } from 'react'
 import SingleBedIcon from '@material-ui/icons/SingleBed'
 import KingBedIcon from '@material-ui/icons/KingBed'
 import EuroIcon from '@material-ui/icons/Euro'
-import Grid from '@material-ui/core/Grid'
-import { PAYMENT_METHODS } from '../constants'
 import CheckIcon from '@material-ui/icons/Check'
+import {
+  Grid,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  makeStyles,
+} from '@material-ui/core'
 
 import {
   isHotelOwner,
@@ -16,15 +21,8 @@ import {
   getUserInfo,
 } from '../utils'
 import Popup from './shared/Popup'
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Snackbar,
-  TextField,
-} from '@material-ui/core'
-import { Alert } from './shared/Alert'
+import { PAYMENT_METHODS } from '../constants'
+import useNotification from '../hooks/useNotification'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
+  const classes = useStyles()
+  const { openNotification } = useNotification()
+
   const [days, setDays] = useState(numberOfDays)
   const [payment, setPayment] = useState(PAYMENT_METHODS.CARD_NOW)
   const [isDone, setIsDone] = useState(false)
@@ -52,48 +53,19 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
     children: data?.children,
   })
   const [popupOpen, setPopupOpen] = useState(false)
-  const [openSnackbar, setOpenSnackbar] = useState({
-    status: false,
-    content: '',
-    vertical: 'top',
-    horizontal: 'center',
-    type: 'success',
-  })
-
-  const { vertical, horizontal } = openSnackbar
-  const classes = useStyles()
 
   const handleValidation = () => {
     if (!isUserLoggedIn()) {
-      setOpenSnackbar({
-        ...openSnackbar,
-        status: true,
-        content: 'Please login first!',
-        type: 'error',
-      })
+      openNotification('Please login first!', 'error')
+
       return false
     }
     if (isHotelOwner() || isAdmin()) {
-      setOpenSnackbar({
-        ...openSnackbar,
-        status: true,
-        content: 'You are not allowed to make reservation!',
-        type: 'error',
-      })
+      openNotification('You are not allowed to make reservation!', 'error')
+
       return false
     }
     return true
-  }
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpenSnackbar({
-      ...openSnackbar,
-      status: false,
-    })
   }
 
   const createReservation = async (e) => {
@@ -118,20 +90,10 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
           'PUT'
         )
       }
-      setOpenSnackbar({
-        ...openSnackbar,
-        status: true,
-        content: 'Reservation has been created!',
-        type: 'success',
-      })
+      openNotification('Reservation has been created!', 'success')
       setIsDone(true)
     } catch (err) {
-      setOpenSnackbar({
-        ...openSnackbar,
-        status: true,
-        content: err.message,
-        type: 'error',
-      })
+      openNotification(err.message, 'error')
     }
   }
 
@@ -283,26 +245,6 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
         justify="flex-end"
         alignItems="flex-end"
       ></Grid>
-      <Snackbar
-        open={openSnackbar.status}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical, horizontal }}
-      >
-        <Alert severity={openSnackbar.type} onClose={handleClose}>
-          {openSnackbar.content}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openSnackbar.status}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical, horizontal }}
-      >
-        <Alert severity={openSnackbar.type} onClose={handleClose}>
-          {openSnackbar.content}
-        </Alert>
-      </Snackbar>
     </Grid>
   )
 }

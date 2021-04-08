@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
+import { InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import LoadingIcon from '../../../shared/LoadingIcon'
-import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { SELECT_MENU_PROPS } from '../../../../constants'
 import { useFindCities } from '../../../../hooks'
 

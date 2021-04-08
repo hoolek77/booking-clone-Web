@@ -1,40 +1,43 @@
 import React, { useState } from 'react'
-import { TextField, Input, CircularProgress } from '@material-ui/core'
-import { fetchData } from '../../../utils'
+import {
+  TextField,
+  Input,
+  CircularProgress,
+  Grid,
+  Button,
+} from '@material-ui/core'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import { fetchData } from '../../../utils'
+import useNotification from '../../../hooks/useNotification'
 
 export const Cities = ({ useStyles }) => {
+  const classes = useStyles()
+  const { openNotification } = useNotification()
+
   const [city, setCity] = useState()
   const [adding, setAdding] = useState(false)
   const [added, setAdded] = useState(false)
-  const classes = useStyles()
 
   const handlerCityChange = (e) => {
     setCity(e.target.value)
   }
+
   const goNext = () => {
     setCity([])
     setAdding(false)
     setAdded(false)
   }
+
   const addCities = async (e) => {
     e.preventDefault()
     try {
       setAdding(true)
-      const addedCity = await fetchData(
-        global.API_BASE_URL + 'api/admin/city',
-        'POST',
-        {
-          name: city,
-        }
-      )
-
+      await fetchData(global.API_BASE_URL + 'api/admin/city', 'POST', {
+        name: city,
+      })
       setAdded(true)
     } catch (err) {
-      alert(err.message)
+      openNotification(err.message, 'error')
       setAdding(false)
     }
   }

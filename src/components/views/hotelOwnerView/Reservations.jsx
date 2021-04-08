@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { fetchData } from '../../../utils/fetchData'
 import { Table } from '../../shared/Table'
-import { Alert } from '../../shared/Alert'
-import { Snackbar } from '@material-ui/core'
+import useNotification from '../../../hooks/useNotification'
 
 const reservationsColums = [
   { field: 'id', headerName: 'Reservation ID', width: 250 },
@@ -14,21 +13,13 @@ const reservationsColums = [
 ]
 
 const Reservations = () => {
+  const { openNotification } = useNotification()
+
   const [reservations, setReservations] = useState([])
-  const [openError, setOpenError] = useState(false)
-  const [errorMsg, setErrorMsg] = useState()
   const [pending, setPending] = useState({
     state: false,
     type: 'tablePending',
   })
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpenError(false)
-  }
 
   const getDate = (date) => {
     const notFormatted = new Date(date).toString()
@@ -59,8 +50,7 @@ const Reservations = () => {
       setReservations(formatReservations(reservations))
       setPending({ state: false, type: 'tablePending' })
     } catch (ex) {
-      setOpenError(true)
-      setErrorMsg(ex.message)
+      openNotification(ex.message, 'error')
     }
   }
 
@@ -79,11 +69,6 @@ const Reservations = () => {
         checkboxSelection={false}
         loading={pending}
       />
-      <Snackbar open={openError} autoHideDuration={3000} onClose={handleClose}>
-        <Alert severity="error" onClose={handleClose}>
-          {errorMsg}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }

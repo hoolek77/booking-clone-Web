@@ -5,8 +5,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import IconButton from '@material-ui/core/IconButton'
 import EditHotel from './EditHotel'
 import LoadingIcon from '../../shared/LoadingIcon'
-import Snackbar from '@material-ui/core/Snackbar'
-import { Alert } from '../../shared/Alert'
+import useNotification from '../../../hooks/useNotification'
 
 const hotelsColumns = (onClick) => [
   {
@@ -15,7 +14,7 @@ const hotelsColumns = (onClick) => [
     width: 100,
     renderCell: () => {
       return (
-        <IconButton aria-label="comments" onClick={onClick}>
+        <IconButton aria-label="edit" onClick={onClick}>
           <CreateIcon />
         </IconButton>
       )
@@ -31,8 +30,9 @@ const hotelsColumns = (onClick) => [
 ]
 
 const ShowAll = () => {
+  const { openNotification } = useNotification()
+
   const [isLoading, setIsLoading] = useState(true)
-  const [alert, setAlert] = useState({ isAlert: false, msg: '' })
   const [isTable, setIsTable] = useState(true)
   const [hotels, setHotels] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
@@ -40,14 +40,6 @@ const ShowAll = () => {
     state: false,
     type: 'tablePending',
   })
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setAlert({ ...alert, isAlert: false })
-  }
 
   const getDate = (date) => {
     const notFormatted = new Date(date).toString()
@@ -97,11 +89,7 @@ const ShowAll = () => {
       setPending({ state: false, type: 'tablePending' })
       setIsLoading(false)
     } catch (ex) {
-      setAlert({
-        isAlert: true,
-        msg: 'Something went wrong',
-        severity: 'error',
-      })
+      openNotification('Something went wrong', 'error')
       setIsLoading(false)
       setPending({ state: false, type: 'tablePending' })
     }
@@ -132,23 +120,10 @@ const ShowAll = () => {
               />
             </div>
           ) : (
-            <EditHotel
-              id={selectedRows}
-              setIsTable={setIsTable}
-              setAlert={setAlert}
-            />
+            <EditHotel id={selectedRows} setIsTable={setIsTable} />
           )}
         </>
       )}
-      <Snackbar
-        open={alert.isAlert}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={alert.severity}>
-          {alert.msg}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }

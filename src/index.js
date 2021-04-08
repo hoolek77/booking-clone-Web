@@ -4,14 +4,13 @@ import { BrowserRouter, Switch } from 'react-router-dom'
 import './core/bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import { NotificationsContextProvider } from './context/notifications'
 import reportWebVitals from './reportWebVitals'
 import generalRoutes from './routes/general'
 import adminRoutes from './routes/admin'
 import hotelOwnerRoutes from './routes/hotelOwner'
 import userRoutes from './routes/user'
-import { TopSection, HotelMoreDetails } from './components'
-import { loadUserInfo, getCookieValue } from './utils'
-import { COOKIE_TOKEN } from './constants'
+import { TopSection, Notification } from './components'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { Footer } from './components/shared/Footer'
 
@@ -47,32 +46,32 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <TopSection />
+    <NotificationsContextProvider>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <TopSection />
 
-        <Switch>
-          {/* ADMIN ROUTES */}
-          {adminRoutes}
+          <Switch>
+            {/* ADMIN ROUTES */}
+            {adminRoutes}
 
-          {/* USER ROUTES */}
-          {userRoutes}
+            {/* USER ROUTES */}
+            {userRoutes}
 
-          {/* HOTEL OWNER ROUTES */}
-          {hotelOwnerRoutes}
+            {/* HOTEL OWNER ROUTES */}
+            {hotelOwnerRoutes}
 
-          {/* GENERAL ROUTES */}
-          {generalRoutes}
-        </Switch>
+            {/* GENERAL ROUTES */}
+            {generalRoutes}
+          </Switch>
 
-        <Footer />
-      </BrowserRouter>
-    </ThemeProvider>
+          <Footer />
+        </BrowserRouter>
+        <Notification />
+      </ThemeProvider>
+    </NotificationsContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()

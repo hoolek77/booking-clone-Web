@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { fetchData } from '../../../utils'
 import { DataGrid } from '@material-ui/data-grid'
 import { CircularProgress } from '@material-ui/core'
+import { fetchData } from '../../../utils'
+import useNotification from '../../../hooks/useNotification'
 
 export const GetCities = ({ columns, useStyles }) => {
+  const { openNotification } = useNotification()
   const [cities, setCities] = useState([])
   const [pending, setPending] = useState(true)
 
@@ -27,14 +29,14 @@ export const GetCities = ({ columns, useStyles }) => {
         setPending(false)
       }
     } catch (err) {
-      console.log(err)
+      openNotification(err.message, 'error')
     }
   }
 
   useEffect(() => {
     getCities()
   }, [])
-  console.log(cities)
+
   return (
     <div className={classes.centerItems}>
       {pending ? (

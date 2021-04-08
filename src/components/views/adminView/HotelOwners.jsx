@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { fetchData } from '../../../utils'
-import { Table } from '../../shared/Table'
-import { Button, Snackbar } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { Alert } from '../../shared/Alert'
+import { Table } from '../../shared/Table'
+import { fetchData } from '../../../utils'
+import useNotification from '../../../hooks/useNotification'
 
 export const HotelOwners = ({ columns, useStyles }) => {
+  const { openNotification } = useNotification()
+
   const [selectedRows, setSelectedRows] = useState([])
   const [users, setUsers] = useState([])
   const [pending, setPending] = useState({
@@ -13,8 +15,6 @@ export const HotelOwners = ({ columns, useStyles }) => {
     type: 'userPending',
   })
   const [loading, setLoading] = useState(false)
-  const [openError, setOpenError] = useState({ status: false, message: '' })
-  const [openSuccess, setOpenSuccess] = useState({ status: false, message: '' })
   const classes = useStyles()
 
   const getNeededUserData = (data) => {
@@ -32,7 +32,7 @@ export const HotelOwners = ({ columns, useStyles }) => {
 
   const handleDeleteUsers = async () => {
     if (selectedRows.length === 0) {
-      setOpenError({ status: true, message: 'No user selected!' })
+      openNotification('No user selected!', 'error')
       return
     }
     selectedRows.forEach(async (user) => {
@@ -43,25 +43,16 @@ export const HotelOwners = ({ columns, useStyles }) => {
           'DELETE'
         )
         await getUsers()
-        setOpenSuccess({
-          status: true,
-          message: selectedRows.length > 1 ? 'Users Removed!' : 'User Removed!',
-        })
+        openNotification(
+          selectedRows.length > 1 ? 'Users Removed!' : 'User Removed!',
+          'success'
+        )
         setPending({ state: false, type: 'tablePending' })
       } catch (err) {
-        setOpenError({ status: true, message: err.message })
+        openNotification(err.message, 'error')
         setPending({ state: false, type: 'tablePending' })
       }
     })
-  }
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setOpenError({ status: false })
-    setOpenSuccess({ status: false })
   }
 
   const getUsers = async () => {
@@ -75,7 +66,7 @@ export const HotelOwners = ({ columns, useStyles }) => {
         setPending({ state: false, type: 'userPending' })
       }
     } catch (err) {
-      setOpenError({ status: true, message: err.message })
+      openNotification(err.message, 'error')
     }
   }
 
@@ -87,13 +78,10 @@ export const HotelOwners = ({ columns, useStyles }) => {
         'PUT'
       )
       await getUsers()
-      setOpenSuccess({
-        status: true,
-        message: 'User Verified',
-      })
+      openNotification('User Verified', 'success')
       setLoading(false)
     } catch (err) {
-      setOpenError({ status: true, message: err.message })
+      openNotification(err.message, 'error')
       setLoading(false)
     }
   }
@@ -124,25 +112,6 @@ export const HotelOwners = ({ columns, useStyles }) => {
         selectedRows={selectedRows}
         loading={pending}
       />
-
-      <Snackbar
-        open={openError.status}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert severity="error" onClose={handleClose}>
-          {openError.message}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openSuccess.status}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert severity="success" onClose={handleClose}>
-          {openSuccess.message}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Snackbar from '@material-ui/core/Snackbar'
-import { Alert } from '../../../shared/Alert'
 import RoomsList from '../RoomsList'
 import AddRoom from '../AddRoom'
 import { handleRoomAdd } from '../../../../utils/index'
+import useNotification from '../../../../hooks/useNotification'
 
 const useForceUpdate = () => {
   const [setValue] = useState(0)
@@ -12,9 +11,8 @@ const useForceUpdate = () => {
 
 export const RoomsStep = ({ setRooms }) => {
   const forceUpdate = useForceUpdate()
+  const { openNotification } = useNotification()
 
-  const [alertOpen, setAlertOpen] = useState(false)
-  const [errorMsg, setErrorMsg] = useState()
   const [room, setRoom] = useState({ beds: { single: 0, double: 0 } })
   const [roomsList, setRoomsList] = useState([])
 
@@ -23,16 +21,7 @@ export const RoomsStep = ({ setRooms }) => {
   }, [roomsList])
 
   const validateError = (errorMsg) => {
-    setErrorMsg(errorMsg)
-    setAlertOpen(true)
-  }
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setAlertOpen(false)
+    openNotification(errorMsg, 'error')
   }
 
   return (
@@ -51,11 +40,6 @@ export const RoomsStep = ({ setRooms }) => {
         setRoomsList={setRoomsList}
         forceUpdate={forceUpdate}
       />
-      <Snackbar open={alertOpen} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          {errorMsg}
-        </Alert>
-      </Snackbar>
     </div>
   )
 }

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import {
+  Button,
+  Box,
+  TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@material-ui/core'
+import { useHistory } from 'react-router'
 import { fetchData, handleRoomAdd } from '../../../utils'
 import LoadingIcon from '../../shared/LoadingIcon'
-import { makeStyles } from '@material-ui/core/styles'
-import { Button, Box, TextField } from '@material-ui/core'
-import { useHistory } from 'react-router'
 import Popup from '../../shared/Popup'
 import AddRoom from './AddRoom'
 import { useFindCities } from '../../../hooks'
 import { SELECT_MENU_PROPS } from '../../../constants'
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import useNotification from '../../../hooks/useNotification'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -17,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const EditHotel = ({ id, setIsTable, setAlert }) => {
+const EditHotel = ({ id }) => {
+  const { openNotification } = useNotification()
+
   const [hotel, setHotel] = useState({})
   const [room, setRoom] = useState({
     beds: { single: 0, double: 0 },
@@ -65,7 +75,7 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
   }
 
   const validateError = (msg) => {
-    setAlert({ isAlert: true, msg, severity: 'error' })
+    openNotification(msg, 'error')
   }
 
   const submitAddRoom = async () => {
@@ -79,13 +89,9 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
 
       setIsPopupLoading(false)
       setPopupOpen(false)
-      setAlert({
-        isAlert: true,
-        msg: 'Room has been added',
-        severity: 'success',
-      })
+      openNotification('Room has been added', 'success')
     } catch (ex) {
-      setAlert({ isAlert: true, msg: ex, severity: 'error' })
+      openNotification(ex, 'error')
       setIsPopupLoading(false)
     }
   }
@@ -112,18 +118,10 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
         'PUT',
         body
       )
-      setAlert({
-        isAlert: 'true',
-        msg: 'Hotel has been saved.',
-        severity: 'success',
-      })
+      openNotification('Hotel has been saved.', 'success')
       history.go(0)
     } catch (ex) {
-      setAlert({
-        isAlert: true,
-        msg: 'something went wrong',
-        severity: 'error',
-      })
+      openNotification('something went wrong', 'error')
     }
   }
 
@@ -137,11 +135,7 @@ const EditHotel = ({ id, setIsTable, setAlert }) => {
       setIsLoading(false)
     } catch (ex) {
       setIsLoading(false)
-      setAlert({
-        isAlert: true,
-        msg: 'something went wrong',
-        severity: 'error',
-      })
+      openNotification('something went wrong', 'error')
     }
   }
 

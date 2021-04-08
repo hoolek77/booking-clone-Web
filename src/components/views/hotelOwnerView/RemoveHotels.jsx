@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { Table } from '../../shared/Table'
-import { fetchData } from '../../../utils'
+import React, { useEffect, useState } from 'react'
+import { Checkbox, FormControlLabel } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
-import EditHotel from './EditHotel'
+import { Table } from '../../shared/Table'
+import { fetchData } from '../../../utils'
 import LoadingIcon from '../../shared/LoadingIcon'
-import Snackbar from '@material-ui/core/Snackbar'
-import { Alert } from '../../shared/Alert'
-import { Checkbox, FormControlLabel, makeStyles } from '@material-ui/core'
 import Popup from '../../shared/Popup'
+import useNotification from '../../../hooks/useNotification'
 
 const hotelsColumns = (onClick) => [
   {
@@ -31,8 +29,9 @@ const hotelsColumns = (onClick) => [
 ]
 
 export const RemoveHotels = () => {
+  const { openNotification } = useNotification()
+
   const [isLoading, setIsLoading] = useState(true)
-  const [alert, setAlert] = useState({ isAlert: false, msg: '' })
   const [hotels, setHotels] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
   const [open, setOpen] = useState(false)
@@ -41,14 +40,6 @@ export const RemoveHotels = () => {
     state: false,
     type: 'tablePending',
   })
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setAlert({ ...alert, isAlert: false })
-  }
 
   const formatHotels = (data) => {
     return data.map(
@@ -76,7 +67,7 @@ export const RemoveHotels = () => {
       setPending({ state: false, type: 'tablePending' })
       setIsLoading(false)
     } catch (ex) {
-      setAlert({ isAlert: true, msg: ex, severity: 'error' })
+      openNotification(ex, 'error')
       setIsLoading(false)
       setPending({ state: false, type: 'tablePending' })
     }
@@ -94,10 +85,10 @@ export const RemoveHotels = () => {
       setOpen(false)
       getHotels()
       setPending({ state: false, type: 'tablePending' })
-      setAlert({ isAlert: true, msg: 'Hotel deleted!', severity: 'success' })
+      openNotification('Hotel deleted!', 'success')
     } catch (err) {
       setOpen(false)
-      setAlert({ isAlert: true, msg: err.message, severity: 'error' })
+      openNotification(err.message, 'error')
       setPending({ state: false, type: 'tablePending' })
     }
   }
@@ -127,15 +118,6 @@ export const RemoveHotels = () => {
           </div>
         </>
       )}
-      <Snackbar
-        open={alert.isAlert}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={alert.severity}>
-          {alert.msg}
-        </Alert>
-      </Snackbar>
       <Popup
         open={open}
         setOpen={setOpen}

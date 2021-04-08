@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import FolderIcon from '@material-ui/icons/Folder'
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid'
 

@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { fetchData } from '../../../utils/'
 import { makeStyles } from '@material-ui/core/styles'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import Button from '@material-ui/core/Button'
-import Snackbar from '@material-ui/core/Snackbar'
-import MuiAlert from '@material-ui/lab/Alert'
-import Typography from '@material-ui/core/Typography'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core'
 import { RoomsStep, LocalizationStep, BasicInformationStep } from './steps'
+import useNotification from '../../../hooks/useNotification'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,20 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />
-}
-
 const getSteps = () => {
   return ['Basic information', 'Localization', 'Rooms']
 }
 
 const AddHotel = () => {
   const classes = useStyles()
+  const { openNotification } = useNotification()
 
-  const [errorMsg, setErrorMsg] = useState()
-  const [alertOpen, setAlertOpen] = useState(false)
-  const [successOpen, setSuccessOpen] = useState(false)
   const [loadingCircle, setLoadingCircle] = useState(false)
 
   const [activeStep, setActiveStep] = useState(0)
@@ -67,15 +62,6 @@ const AddHotel = () => {
 
   const steps = getSteps()
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    setAlertOpen(false)
-    setSuccessOpen(false)
-  }
-
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
   }
@@ -95,11 +81,10 @@ const AddHotel = () => {
         'POST',
         data
       )
-      setSuccessOpen(true)
+      openNotification('Hotel has been added!', 'success')
       setLoadingCircle(false)
-      setTimeout(() => {
-        window.location.href = '/hotelOwner'
-      }, 2000)
+
+      window.location.href = '/hotelOwner'
     } catch (ex) {
       validateError(ex.message)
       setLoadingCircle(false)
@@ -107,8 +92,7 @@ const AddHotel = () => {
   }
 
   const validateError = (errorMsg) => {
-    setErrorMsg(errorMsg)
-    setAlertOpen(true)
+    openNotification(errorMsg, 'error')
   }
 
   const getFinishOrLoading = () => {
@@ -286,20 +270,6 @@ const AddHotel = () => {
           </div>
         </div>
       </div>
-      <Snackbar open={alertOpen} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          {errorMsg}
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={successOpen}
-        autoHideDuration={3000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="success">
-          Hotel has been added
-        </Alert>
-      </Snackbar>
     </div>
   )
 }
