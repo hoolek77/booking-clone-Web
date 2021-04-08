@@ -65,8 +65,6 @@ export const TopSection = () => {
             <a href="#" className="loginForgotPassword loginLink">
               FORGOT PASSWORD
             </a>
-          </Grid>
-          <Grid item className="loginRegister">
             <Link to={`/register`} className="loginLink">
               <Button size="small" variant="contained" color="secondary">
                 REGISTER
