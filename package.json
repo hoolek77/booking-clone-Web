@@ -24,7 +24,6 @@
     "webpack": "^5.26.2"
   },
   "scripts": {
-    "run": "react-scripts start",
     "start": "npm run serve:dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
