@@ -12,7 +12,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 400,
+    minWidth: 300,
+    maxWidth: 400,
   },
   media: {
     height: 140,
@@ -34,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundSize: '405px',
     },
   },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }))
 
 export const CityCard = ({ url, city, cityDesc }) => {
@@ -41,9 +47,10 @@ export const CityCard = ({ url, city, cityDesc }) => {
   return (
     <Link
       to={{ pathname: `/hotels/${city}`, state: { city: city } }}
-      className={classes.noUnderLine}
+      className={(classes.noUnderLine, classes.center)}
+      style={{ width: '100%' }}
     >
-      <Card className={classes.root}>
+      <Card className={classes.root} style={{ width: '100%' }}>
         <CardActionArea>
           <CardMedia className={classes.media} image={url} title={city} />
           <CardContent>
