@@ -11,10 +11,6 @@ const routes = [
     name: 'Hotel Owners',
   },
   {
-    location: '/admin/reservations',
-    name: 'Reservations',
-  },
-  {
     type: 'dropdown',
     name: 'City',
     location: '/',
