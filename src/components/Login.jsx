@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField, Input, CircularProgress } from '@material-ui/core'
+import { TextField, Input, CircularProgress, Box } from '@material-ui/core'
 
 import { fetchData, saveCookie, loadUserInfo } from '../utils'
 import { COOKIE_TOKEN } from '../constants'
@@ -15,7 +15,6 @@ export class Login extends React.Component {
       },
       logging: false,
     }
-
     this.login.bind(this)
     this.handleEmailChange.bind(this)
     this.handlePasswordChange.bind(this)
@@ -44,7 +43,7 @@ export class Login extends React.Component {
       this.setState({ logging: false })
       window.location.href = '/'
     } catch (err) {
-      alert(err.message)
+      this.props.openNotification(err.message, 'error')
 
       this.setState({ logging: false })
     }
@@ -60,7 +59,12 @@ export class Login extends React.Component {
 
   render() {
     return (
-      <form id="Login" onSubmit={(e) => this.login(e)} autoComplete="on">
+      <form
+        id="Login"
+        onSubmit={(e) => this.login(e)}
+        autoComplete="on"
+        style={{ marginBottom: 5 }}
+      >
         <TextField
           id="outlined-basic"
           className="loginTextField"
@@ -87,16 +91,16 @@ export class Login extends React.Component {
           color="secondary"
         />
         {!this.state.logging ? (
-          <>
-            <Input
-              type="submit"
-              value="Login"
-              className="loginInput"
-              color="secondary"
-            />
-          </>
+          <div className="loginSubmitContainer">
+            <Input type="submit" value="Login" color="secondary" />
+          </div>
         ) : (
-          <CircularProgress color="secondary" />
+          <div className="loginSubmitContainer">
+            <CircularProgress
+              color="secondary"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
         )}
       </form>
     )

@@ -1,5 +1,10 @@
-.loginInput {
-  margin: 12px 10px 0;
+.loginSubmitContainer {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
 }
 
 .loginUserInfo {
