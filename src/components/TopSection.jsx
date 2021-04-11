@@ -29,49 +29,62 @@ export const TopSection = () => {
       </Grid>
 
       {isLogged ? (
-        <div className="loginUserInfo">
-          Willkommen {userInfo.firstName} {userInfo.lastName} !
-          <Link to={`/${userInfo.role}`} style={{ textDecoration: 'none' }}>
+        <Grid
+          container
+          direction="column"
+          justify="flex-end"
+          alignItems="flex-end"
+          className="loggedGrid"
+        >
+          <div className="loginUserInfo">
+            Willkommen {userInfo.firstName} {userInfo.lastName} !
+          </div>
+          <div className="loggedButtonContainer">
+            <Link to={`/${userInfo.role}`} style={{ textDecoration: 'none' }}>
+              <Button
+                size="small"
+                variant="contained"
+                color="secondary"
+                style={{ marginRight: '5%' }}
+              >
+                <div className="panelButton">
+                  {userInfo.role === HOTEL_OWNER_ROLE
+                    ? 'Hotel Owner'
+                    : userInfo.role}{' '}
+                  panel
+                </div>
+              </Button>
+            </Link>
             <Button
               size="small"
               variant="contained"
+              onClick={logout}
               color="secondary"
-              style={{ marginRight: '5%' }}
             >
-              {userInfo.role === HOTEL_OWNER_ROLE
-                ? 'Hotel Owner'
-                : userInfo.role}{' '}
-              panel
+              logout
             </Button>
-          </Link>
-          <Button
-            size="small"
-            variant="contained"
-            onClick={logout}
-            color="secondary"
-          >
-            logout
-          </Button>
-        </div>
+          </div>
+        </Grid>
       ) : (
         <Grid
           container
           direction="row"
           justify="flex-end"
           alignItems="center"
-          spacing={3}
           className="loginContainer"
         >
           <Grid item>
             <Login openNotification={openNotification} />
-            <a href="#" className="loginForgotPassword loginLink">
-              FORGOT PASSWORD
-            </a>
-            <Link to={`/register`} className="loginLink">
-              <Button size="small" variant="contained" color="secondary">
-                REGISTER
-              </Button>
-            </Link>
+            <div className="loginButtonContainer">
+              <a href="#" className="loginForgotPassword loginLink">
+                FORGOT PASSWORD
+              </a>
+              <Link to={`/register`} className="loginLink">
+                <Button size="small" variant="contained" color="secondary">
+                  REGISTER
+                </Button>
+              </Link>
+            </div>
           </Grid>
         </Grid>
       )}

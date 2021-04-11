@@ -61,11 +61,21 @@
 #outlined-basic {
   z-index: 1;
 }
+.loggedButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.loggedButtonContainer a {
+  width: 90%;
+}
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 960px) {
   .topSectionContainer {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   .topSectionHeaderlink {
@@ -75,8 +85,31 @@
     margin: 0;
   }
 
-  .loginContainer {
+  #TopSection .loginContainer {
     position: relative;
     top: -12px;
+    justify-content: center;
+  }
+  .topSectionHeaderlink {
+    display: none;
+  }
+  #TopSection {
+    padding: 0;
+  }
+  .loginButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+  }
+  #TopSection .loggedGrid {
+    justify-content: center;
+    align-items: center;
+  }
+  .loggedButtonContainer {
+    display: flex;
+    justify-content: space-around;
+  }
+  .panelButton {
+    width: 150px;
   }
 }
