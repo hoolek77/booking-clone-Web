@@ -37,23 +37,31 @@ export function HotelCard({ hotel, days, data }) {
   const classes = useStyles()
 
   return (
-    <Container maxWidth="lg">
-      <div className={classes.root}>
-        <Grid container justify="center" item xs={4} className={classes.grid}>
-          <HotelIcon className={classes.icon} />
+    <Container maxWidth="lg" className="hotel-card__container">
+      <div className={`${classes.root} hotel-card__root`}>
+        <Grid
+          container
+          justify="center"
+          item
+          xs={4}
+          className="hotel-card__icon-grid"
+        >
+          <HotelIcon className={`${classes.icon} hotel-icon`} />
         </Grid>
-        <Grid item xs={6}>
-          <Grid container justify="space-between">
-            <span className={classes.hotelHeader}>{hotel.name}</span>
+        <Grid item xs={6} className="hotel-card__info">
+          <Grid container justify="space-between" className="hotel-card__info">
+            <span className={`${classes.hotelHeader} hotel-card__header`}>
+              {hotel.name}
+            </span>
             <Rating
-              className={classes.rating}
+              className={`${classes.rating} hotel-card__raiting`}
               name="read-only"
               value={1}
               readOnly
             />
           </Grid>
           <p>({hotel.localization.city})</p>
-          <p>{hotel.description}</p>
+          {hotel.description ? <p>{hotel.description}</p> : null}
         </Grid>
         <Grid item xs={2} container justify="flex-end" alignItems="flex-end">
           <Link

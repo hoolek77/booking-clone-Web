@@ -1,0 +1,5 @@
+@media screen and (max-width: 650px) {
+  .hotels-container {
+    padding: 0 !important;
+  }
+}
