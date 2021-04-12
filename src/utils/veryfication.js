@@ -1,4 +1,9 @@
-import { ADMIN_ROLE, COOKIE_TOKEN, HOTEL_OWNER_ROLE } from '../constants'
+import {
+  ADMIN_ROLE,
+  COOKIE_TOKEN,
+  HOTEL_OWNER_ROLE,
+  USER_ROLE,
+} from '../constants'
 import { getCookieValue } from './cookies'
 import { getUserInfo } from './userInfo'
 
@@ -29,6 +34,11 @@ export const isHotelOwnerVerified = () => {
 export const isAdmin = () => {
   const role = getRoleFromLS()
   return role === ADMIN_ROLE
+}
+
+export const isUser = () => {
+  const role = getRoleFromLS()
+  return role === USER_ROLE
 }
 
 export const isUserLoggedIn = () => {
