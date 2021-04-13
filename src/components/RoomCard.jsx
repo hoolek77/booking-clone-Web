@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     position: 'relative',
-    top: '6px',
     margin: '0 5px',
   },
   button: {
@@ -99,22 +98,35 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
-      <Grid container direction="row" justify="center" alignItems="flex-start">
-        <Grid item xs={8}>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="flex-start"
+        className="roomCardGrid"
+      >
+        <Grid item xs={6} className="roomCardDescription">
           <span>Room number: {room.roomNumber}</span>
           <p>{room.description}</p>
         </Grid>
-        <Grid container direction="column" item xs={2}>
-          <span>
+        <Grid container direction="column" item xs={3} className="roomCardGrid">
+          <span className="roomCardSpan">
             <SingleBedIcon className={classes.icon} /> Single bed:{' '}
             <span>{room.beds.single} </span>
           </span>
-          <span>
+          <span className="roomCardSpan">
             <KingBedIcon className={classes.icon} /> Double bed:{' '}
             <span>{room.beds.double} </span>
           </span>
         </Grid>
-        <Grid container direction="column" item xs={2}>
+        <Grid
+          container
+          direction="column"
+          alignItems="flex-end"
+          item
+          xs={3}
+          className="roomCardGrid"
+        >
           <span>
             <EuroIcon className={classes.icon} />
             Price: {room.price * days}

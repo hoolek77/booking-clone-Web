@@ -1,0 +1,19 @@
+.roomCardSpan {
+  margin: 0 10px;
+}
+
+@media screen and (max-width: 960px) {
+  .MuiGrid-root .roomCardGrid {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+  }
+  .MuiGrid-root .MuiGrid-item {
+    margin: 10px 0;
+  }
+  .MuiGrid-root .roomCardDescription {
+    width: 100%;
+    max-width: 100%;
+  }
+}
