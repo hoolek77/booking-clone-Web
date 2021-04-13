@@ -23,6 +23,7 @@ export default function Popup({
   open,
   setOpen,
   isButton = true,
+  isButtons = true,
 }) {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -61,27 +62,31 @@ export default function Popup({
           <DialogContentText>{modalContent}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={buttonAgreeFunction && buttonAgreeFunction}
-            color="primary"
-            autoFocus
-            type="submit"
-            form={submitFormId}
-            disabled={buttonAgreeDisabled}
-          >
-            {buttonAgreeContent}
-          </Button>
-          <Button
-            autoFocus
-            onClick={
-              buttonDisagreeFunction
-                ? (handleClose, buttonDisagreeFunction)
-                : handleClose
-            }
-            color="primary"
-          >
-            {buttonDisagreeContent}
-          </Button>
+          {isButtons ? (
+            <>
+              <Button
+                onClick={buttonAgreeFunction && buttonAgreeFunction}
+                color="primary"
+                autoFocus
+                type="submit"
+                form={submitFormId}
+                disabled={buttonAgreeDisabled}
+              >
+                {buttonAgreeContent}
+              </Button>
+              <Button
+                autoFocus
+                onClick={
+                  buttonDisagreeFunction
+                    ? (handleClose, buttonDisagreeFunction)
+                    : handleClose
+                }
+                color="primary"
+              >
+                {buttonDisagreeContent}
+              </Button>
+            </>
+          ) : null}
         </DialogActions>
       </Dialog>
     </div>

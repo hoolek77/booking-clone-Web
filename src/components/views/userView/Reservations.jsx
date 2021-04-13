@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { IconButton } from '@material-ui/core'
 import useNotification from '../../../hooks/useNotification'
 import { fetchData } from '../../../utils'
 import { Table } from '../../shared/Table'
+import Popup from '../../shared/Popup'
+import ReservationPopup from './ReservationPopup'
 
 const reservationsColums = (onClick) => [
   {
@@ -29,10 +30,10 @@ const reservationsColums = (onClick) => [
 
 const Reservations = () => {
   const { openNotification } = useNotification()
-  const history = useHistory()
 
   const [reservations, setReservations] = useState([])
   const [selectedRow, setSelectedRow] = useState()
+  const [popupOpen, setPopupOpen] = useState(false)
   const [pending, setPending] = useState({
     state: false,
     type: 'tablePending',
@@ -57,21 +58,6 @@ const Reservations = () => {
     })
   }
 
-  const removeReservation = async () => {
-    try {
-      if (selectedRow[0] === undefined) return
-      console.log(selectedRow[0])
-      await fetchData(
-        global.API_BASE_URL + `api/reservations/${selectedRow[0]}`,
-        'DELETE'
-      )
-      openNotification('Reservation removed successfully!', 'success')
-      history.go(0)
-    } catch (ex) {
-      openNotification(ex.message, 'error')
-    }
-  }
-
   const getReservations = async () => {
     try {
       setPending({ state: true, type: 'tablePending' })
@@ -94,7 +80,7 @@ const Reservations = () => {
     <div className="user-table">
       <Table
         rows={reservations}
-        columns={reservationsColums(removeReservation)}
+        columns={reservationsColums(() => setPopupOpen(true))}
         height="100%"
         width="100%"
         pageSize={6}
@@ -102,6 +88,15 @@ const Reservations = () => {
         loading={pending}
         setSelectedRows={setSelectedRow}
         selectedRows={selectedRow}
+      />
+      <Popup
+        isButton={false}
+        isButtons={false}
+        open={popupOpen}
+        setOpen={setPopupOpen}
+        modalContent={
+          <ReservationPopup id={selectedRow} setPopupOpen={setPopupOpen} />
+        }
       />
     </div>
   )

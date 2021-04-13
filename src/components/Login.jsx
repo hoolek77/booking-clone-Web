@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextField, Input, CircularProgress, Box } from '@material-ui/core'
+import { TextField, Input, CircularProgress } from '@material-ui/core'
 
 import { fetchData, saveCookie, loadUserInfo } from '../utils'
 import { COOKIE_TOKEN } from '../constants'

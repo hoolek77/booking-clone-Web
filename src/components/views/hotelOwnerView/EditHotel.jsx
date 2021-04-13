@@ -329,6 +329,7 @@ const EditHotel = ({ id }) => {
           </Box>
           <Popup
             buttonTitle={'Add Room'}
+            isButtons={false}
             modalContent={
               isPopupLoading ? (
                 <LoadingIcon />
