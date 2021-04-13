@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { HotelCard } from '../../HotelCard'
 import { CircularProgress, makeStyles } from '@material-ui/core'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useSearch } from '../../../hooks'
 import { Pagination, PaginationItem } from '@material-ui/lab'
 
@@ -26,7 +26,6 @@ export const Hotels = ({ match, location }) => {
   const [hotels, search] = useSearch()
   const [loading, setLoading] = useState(false)
   const [days, setDays] = useState()
-  // const [page, setPage] = useState(1)
 
   const query = new URLSearchParams(location.search)
   const page = parseInt(query.get('pageNumber') || '1', 10)

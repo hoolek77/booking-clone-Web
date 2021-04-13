@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid'
@@ -76,9 +76,9 @@ export const TopSection = () => {
           <Grid item>
             <Login openNotification={openNotification} />
             <div className="loginButtonContainer">
-              <a href="#" className="loginForgotPassword loginLink">
+              <Link to="/" className="loginForgotPassword loginLink">
                 FORGOT PASSWORD
-              </a>
+              </Link>
               <Link to={`/register`} className="loginLink">
                 <Button size="small" variant="contained" color="secondary">
                   REGISTER

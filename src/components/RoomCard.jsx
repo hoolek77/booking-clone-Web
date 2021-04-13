@@ -42,7 +42,6 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
   const classes = useStyles()
   const { openNotification } = useNotification()
 
-  const [days, setDays] = useState(numberOfDays)
   const [payment, setPayment] = useState(PAYMENT_METHODS.CARD_NOW)
   const [isDone, setIsDone] = useState(false)
   const [startDate, setStartDate] = useState(data?.startDate)
@@ -129,7 +128,7 @@ export function RoomCard({ room, numberOfDays = 1, hotelData, data }) {
         >
           <span>
             <EuroIcon className={classes.icon} />
-            Price: {room.price * days}
+            Price: {room.price * numberOfDays}
           </span>
           <Popup
             buttonTitle="MAKE RESERVATION"
