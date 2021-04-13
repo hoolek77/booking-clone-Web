@@ -58,6 +58,7 @@ const SearchBar = () => {
   useEffect(() => {
     if (startDate && endDate && startDate > endDate) {
       openNotification('Incorrect time peroid', 'error')
+      setEndDate('')
       setError(true)
     } else {
       setError(false)
