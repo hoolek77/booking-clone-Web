@@ -17,10 +17,10 @@ export const adminStyles = makeStyles((theme) => ({
     margin: '0 auto',
   },
   button: {
-    background: theme.palette.error.main,
+    background: `${theme.palette.error.main} !important`,
     color: 'white',
     '&:hover': {
-      background: theme.palette.error.dark,
+      background: `${theme.palette.error.dark} !important`,
     },
   },
   controlRow: {
