@@ -18,7 +18,7 @@ export const adminStyles = makeStyles((theme) => ({
   },
   button: {
     background: `${theme.palette.error.main} !important`,
-    color: 'white',
+    color: 'white !important',
     '&:hover': {
       background: `${theme.palette.error.dark} !important`,
     },
